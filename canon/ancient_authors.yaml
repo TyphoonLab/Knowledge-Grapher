@@ -1,0 +1,36 @@
+# Ancient authors. `name` is canonical; `aliases` are matched case- and accent-insensitively.
+# Authors of works in the built-in locus table are linked to their cited passages
+# automatically (PrimaryText -attributed_to-> AncientAuthor).
+- {name: Herodotus, aliases: [Hérodote, Erodoto, Herodot, Ἡρόδοτος]}
+- {name: Thucydides, aliases: [Thukydides, Thucydide, Tucidide, Θουκυδίδης]}
+- {name: Xenophon, aliases: [Xénophon, Senofonte, Ξενοφῶν]}
+- {name: Polybius, aliases: [Polybios, Polybe, Polibio, Πολύβιος]}
+- {name: Diodorus Siculus, aliases: [Diodor, Diodore de Sicile, Diodoro Siculo]}
+- {name: Strabo, aliases: [Strabon, Strabone, Στράβων]}
+- {name: Dionysius of Halicarnassus, aliases: [Dionysios von Halikarnassos, Denys d'Halicarnasse, Dionigi di Alicarnasso]}
+- {name: Appian, aliases: [Appianos, Appien, Appiano]}
+- {name: Cassius Dio, aliases: [Dio Cassius, Cassio Dione, Dion Cassius]}
+- {name: Plutarch, aliases: [Plutarque, Plutarco, Plutarchos, Πλούταρχος]}
+- {name: Aristotle, aliases: [Aristoteles, Aristote, Aristotele, Ἀριστοτέλης]}
+- {name: Tacitus, aliases: [Tacite, Tacito]}
+- {name: Suetonius, aliases: [Suetone, Svetonio, Sueton]}
+- {name: Pliny the Elder, aliases: [Plinius der Ältere, Plinius maior, Pline l'Ancien, Plinio il Vecchio]}
+- {name: Pliny the Younger, aliases: [Plinius der Jüngere, Plinius minor, Pline le Jeune, Plinio il Giovane]}
+- {name: Cicero, aliases: [Cicéron, Cicerone, Marcus Tullius Cicero]}
+- {name: Cato the Elder, aliases: [Cato, Cato maior, Caton l'Ancien, Catone il Censore]}
+- {name: Varro, aliases: [Varron, Varrone, Marcus Terentius Varro]}
+- {name: Columella, aliases: [Columelle]}
+- {name: Petronius, aliases: [Petron, Pétrone, Petronio]}
+- {name: Juvenal, aliases: [Juvénal, Giovenale, Iuvenalis]}
+- {name: Martial, aliases: [Martialis, Marziale]}
+- {name: Seneca the Younger, aliases: [Seneca, Sénèque, Seneca il Giovane]}
+- {name: Livy, aliases: [Livius, Tite-Live, Livio]}
+- {name: Horace, aliases: [Horaz, Orazio, Horatius]}
+- {name: Gaius, aliases: [Gaius (jurist)]}
+- {name: Augustus, aliases: [Auguste, Augusto, Octavian]}
+- {name: Josephus, aliases: [Flavius Josephus, Josèphe, Flavio Giuseppe, Iosephus, Ἰώσηπος]}
+- {name: Philo of Alexandria, aliases: [Philo, Philon, Philon von Alexandrien, Philon d'Alexandrie, Filone di Alessandria]}
+- {name: Clement of Rome, aliases: [Clemens Romanus, Clément de Rome, Clemente Romano]}
+- {name: Clement of Alexandria, aliases: [Clemens Alexandrinus, Clément d'Alexandrie, Clemente Alessandrino]}
+- {name: Eusebius, aliases: [Eusebius of Caesarea, Eusèbe, Eusebio]}
+- {name: Justin Martyr, aliases: [Justin, Justinus, Justin le Martyr, Giustino]}

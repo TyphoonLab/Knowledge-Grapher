@@ -1,0 +1,3 @@
+# Named scholarly claims. `name` is the canonical proposition; add the variant
+# phrasings the extractor produces as aliases (see work/canon_candidates/arguments.yaml).
+[]

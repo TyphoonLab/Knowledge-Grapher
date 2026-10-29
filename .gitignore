@@ -1,0 +1,10 @@
+# your documents and everything derived from them stay local
+/input/
+/work/
+/out/
+sample/work/
+sample/out/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/

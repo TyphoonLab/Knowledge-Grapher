@@ -1,0 +1,77 @@
+# Book table for the deterministic locus parser.
+#
+# key        internal id, used in node ids (pt:mark.6.37)
+# sbl        display abbreviation used in canonical names (SBL Handbook, 2nd ed.)
+# chapters   number of chapters (single-chapter books take "Phlm 9" as verse 9)
+# en/de/fr/it  names and abbreviations in each language. Short abbreviations that
+#            mean different books in different languages (e.g. "Gn", "Ab") are
+#            resolved using the document's detected language.
+# numbered   for 1-3 John, 1-2 Cor, etc. the aliases are stems; numeral prefixes
+#            ("1 Kor", "1Kor", "1. Kor", "I Cor", "First Corinthians") are generated.
+
+# ---------------------------------------------------------------- Old Testament
+- {key: gen, sbl: Gen, chapters: 50, en: [Genesis, Gen, Gn], de: [Genesis, Gen, "1 Mose", "1 Mos"], fr: [Genèse, Gn], it: [Genesi, Gen]}
+- {key: exod, sbl: Exod, chapters: 40, en: [Exodus, Exod, Ex], de: [Exodus, Ex, "2 Mose", "2 Mos"], fr: [Exode, Ex], it: [Esodo, Es]}
+- {key: lev, sbl: Lev, chapters: 27, en: [Leviticus, Lev, Lv], de: [Levitikus, Lev, "3 Mose", "3 Mos"], fr: [Lévitique, Lv], it: [Levitico, Lv]}
+- {key: num, sbl: Num, chapters: 36, en: [Numbers, Num, Nm], de: [Numeri, Num, "4 Mose", "4 Mos"], fr: [Nombres, Nb], it: [Numeri, Nm]}
+- {key: deut, sbl: Deut, chapters: 34, en: [Deuteronomy, Deut, Dt], de: [Deuteronomium, Dtn, "5 Mose", "5 Mos"], fr: [Deutéronome, Dt], it: [Deuteronomio, Dt]}
+- {key: josh, sbl: Josh, chapters: 24, en: [Joshua, Josh], de: [Josua, Jos], fr: [Josué, Jos], it: [Giosuè, Gs]}
+- {key: judg, sbl: Judg, chapters: 21, en: [Judges, Judg, Jdg], de: [Richter, Ri], fr: [Juges, Jg], it: [Giudici, Gdc]}
+- {key: ruth, sbl: Ruth, chapters: 4, en: [Ruth], de: [Rut, Ruth], fr: [Ruth, Rt], it: [Rut, Rt]}
+- {key: sam, sbl: Sam, numbered: [1, 2], chapters: [31, 24], en: [Samuel, Sam], de: [Samuel, Sam], fr: [Samuel, S, Sm], it: [Samuele, Sam]}
+- {key: kgs, sbl: Kgs, numbered: [1, 2], chapters: [22, 25], en: [Kings, Kgs, Kings], de: [Könige, Kön, Kon], fr: [Rois, R], it: [Re]}
+- {key: chr, sbl: Chr, numbered: [1, 2], chapters: [29, 36], en: [Chronicles, Chr], de: [Chronik, Chr], fr: [Chroniques, Ch], it: [Cronache, Cr]}
+- {key: ezra, sbl: Ezra, chapters: 10, en: [Ezra], de: [Esra, Esr], fr: [Esdras, Esd], it: [Esdra, Esd]}
+- {key: neh, sbl: Neh, chapters: 13, en: [Nehemiah, Neh], de: [Nehemia, Neh], fr: [Néhémie, Ne], it: [Neemia, Ne]}
+- {key: esth, sbl: Esth, chapters: 10, en: [Esther, Esth], de: [Ester, Est], fr: [Esther, Est], it: [Ester, Est]}
+- {key: job, sbl: Job, chapters: 42, en: [Job], de: [Ijob, Hiob, Hi], fr: [Job, Jb], it: [Giobbe, Gb]}
+- {key: ps, sbl: Ps, chapters: 150, en: [Psalms, Psalm, Pss, Ps], de: [Psalmen, Psalm, Ps], fr: [Psaumes, Psaume, Ps], it: [Salmi, Salmo, Sal]}
+- {key: prov, sbl: Prov, chapters: 31, en: [Proverbs, Prov], de: [Sprichwörter, Sprüche, Spr], fr: [Proverbes, Pr], it: [Proverbi, Pr, Prv]}
+- {key: eccl, sbl: Eccl, chapters: 12, en: [Ecclesiastes, Qoheleth, Eccl, Qoh], de: [Kohelet, Prediger, Koh, Pred], fr: [Qohélet, Ecclésiaste, Qo], it: [Qoèlet, Ecclesiaste, Qo]}
+- {key: song, sbl: Song, chapters: 8, en: [Song of Songs, Song of Solomon, Canticles, Song, Cant], de: [Hoheslied, Hld], fr: [Cantique des cantiques, Ct], it: [Cantico dei cantici, Ct]}
+- {key: isa, sbl: Isa, chapters: 66, en: [Isaiah, Isa], de: [Jesaja, Jes], fr: [Isaïe, Esaïe, Is, Es], it: [Isaia, Is]}
+- {key: jer, sbl: Jer, chapters: 52, en: [Jeremiah, Jer], de: [Jeremia, Jer], fr: [Jérémie, Jr, Jer], it: [Geremia, Ger]}
+- {key: lam, sbl: Lam, chapters: 5, en: [Lamentations, Lam], de: [Klagelieder, Klgl], fr: [Lamentations, Lm], it: [Lamentazioni, Lam]}
+- {key: ezek, sbl: Ezek, chapters: 48, en: [Ezekiel, Ezek], de: [Ezechiel, Hesekiel, Ez, Hes], fr: [Ézéchiel, Ez], it: [Ezechiele, Ez]}
+- {key: dan, sbl: Dan, chapters: 14, en: [Daniel, Dan], de: [Daniel, Dan], fr: [Daniel, Dn], it: [Daniele, Dn]}
+- {key: hos, sbl: Hos, chapters: 14, en: [Hosea, Hos], de: [Hosea, Hos], fr: [Osée, Os], it: [Osea, Os]}
+- {key: joel, sbl: Joel, chapters: 4, en: [Joel], de: [Joel], fr: [Joël, Jl], it: [Gioele, Gl]}
+- {key: amos, sbl: Amos, chapters: 9, en: [Amos], de: [Amos, Am], fr: [Amos, Am], it: [Amos, Am]}
+- {key: obad, sbl: Obad, chapters: 1, en: [Obadiah, Obad], de: [Obadja, Obd], fr: [Abdias, Ab, Abd], it: [Abdia, Abd]}
+- {key: jonah, sbl: Jonah, chapters: 4, en: [Jonah, Jon], de: [Jona], fr: [Jonas, Jon], it: [Giona, Gio, Gn]}
+- {key: mic, sbl: Mic, chapters: 7, en: [Micah, Mic], de: [Micha, Mi], fr: [Michée, Mi], it: [Michea, Mi]}
+- {key: nah, sbl: Nah, chapters: 3, en: [Nahum, Nah], de: [Nahum, Nah], fr: [Nahoum, Na], it: [Naum, Na]}
+- {key: hab, sbl: Hab, chapters: 3, en: [Habakkuk, Hab], de: [Habakuk, Hab], fr: [Habaquq, Ha], it: [Abacuc, Ab]}
+- {key: zeph, sbl: Zeph, chapters: 3, en: [Zephaniah, Zeph], de: [Zefanja, Zef], fr: [Sophonie, So], it: [Sofonia, Sof]}
+- {key: hag, sbl: Hag, chapters: 2, en: [Haggai, Hag], de: [Haggai, Hag], fr: [Aggée, Ag], it: [Aggeo, Ag]}
+- {key: zech, sbl: Zech, chapters: 14, en: [Zechariah, Zech], de: [Sacharja, Sach], fr: [Zacharie, Za], it: [Zaccaria, Zc]}
+- {key: mal, sbl: Mal, chapters: 3, en: [Malachi, Mal], de: [Maleachi, Mal], fr: [Malachie, Ml], it: [Malachia, Ml]}
+# ---------------------------------------------------------------- Deuterocanon
+- {key: tob, sbl: Tob, chapters: 14, en: [Tobit, Tob], de: [Tobit, Tob], fr: [Tobie, Tb], it: [Tobia, Tb]}
+- {key: jdt, sbl: Jdt, chapters: 16, en: [Judith, Jdt], de: [Judit, Jdt], fr: [Judith, Jdt], it: [Giuditta, Gdt]}
+- {key: wis, sbl: Wis, chapters: 19, en: [Wisdom of Solomon, Wisdom, Wis], de: [Weisheit, Weish], fr: [Sagesse, Sg], it: [Sapienza, Sap]}
+- {key: sir, sbl: Sir, chapters: 51, en: [Sirach, Ecclesiasticus, Ben Sira, Sir, Ecclus], de: [Jesus Sirach, Sirach, Sir], fr: [Siracide, Si], it: [Siracide, Sir]}
+- {key: bar, sbl: Bar, chapters: 6, en: [Baruch, Bar], de: [Baruch, Bar], fr: [Baruch, Ba], it: [Baruc, Bar]}
+- {key: macc, sbl: Macc, numbered: [1, 2, 3, 4], chapters: [16, 15, 7, 18], en: [Maccabees, Macc], de: [Makkabäer, Makk], fr: [Maccabées, M, Mac], it: [Maccabei, Mac]}
+# ---------------------------------------------------------------- New Testament
+- {key: matt, sbl: Matt, chapters: 28, en: [Matthew, Matt, Mt], de: [Matthäus, Mt], fr: [Matthieu, Mt], it: [Matteo, Mt]}
+- {key: mark, sbl: Mark, chapters: 16, en: [Mark, Mk, Mar], de: [Markus, Mk], fr: [Marc, Mc], it: [Marco, Mc]}
+- {key: luke, sbl: Luke, chapters: 24, en: [Luke, Lk, Luk], de: [Lukas, Lk], fr: [Luc, Lc], it: [Luca, Lc]}
+- {key: john, sbl: John, chapters: 21, en: [John, Jn, Joh], de: [Johannes, Joh], fr: [Jean, Jn], it: [Giovanni, Gv]}
+- {key: acts, sbl: Acts, chapters: 28, en: [Acts of the Apostles, Acts], de: [Apostelgeschichte, Apg], fr: [Actes des Apôtres, Actes, Ac], it: [Atti degli Apostoli, Atti, At]}
+- {key: rom, sbl: Rom, chapters: 16, en: [Romans, Rom], de: [Römer, Röm], fr: [Romains, Rm], it: [Romani, Rm]}
+- {key: cor, sbl: Cor, numbered: [1, 2], chapters: [16, 13], en: [Corinthians, Cor], de: [Korinther, Kor], fr: [Corinthiens, Co], it: [Corinzi, Cor]}
+- {key: gal, sbl: Gal, chapters: 6, en: [Galatians, Gal], de: [Galater, Gal], fr: [Galates, Ga], it: [Galati, Gal]}
+- {key: eph, sbl: Eph, chapters: 6, en: [Ephesians, Eph], de: [Epheser, Eph], fr: [Éphésiens, Ep], it: [Efesini, Ef]}
+- {key: phil, sbl: Phil, chapters: 4, en: [Philippians, Phil], de: [Philipper, Phil], fr: [Philippiens, Ph], it: [Filippesi, Fil]}
+- {key: col, sbl: Col, chapters: 4, en: [Colossians, Col], de: [Kolosser, Kol], fr: [Colossiens, Col], it: [Colossesi, Col]}
+- {key: thess, sbl: Thess, numbered: [1, 2], chapters: [5, 3], en: [Thessalonians, Thess], de: [Thessalonicher, Thess], fr: [Thessaloniciens, Th], it: [Tessalonicesi, Ts]}
+- {key: tim, sbl: Tim, numbered: [1, 2], chapters: [6, 4], en: [Timothy, Tim], de: [Timotheus, Tim], fr: [Timothée, Tm], it: [Timoteo, Tm]}
+- {key: titus, sbl: Titus, chapters: 3, en: [Titus], de: [Titus, Tit], fr: [Tite, Tt], it: [Tito, Tt]}
+- {key: phlm, sbl: Phlm, chapters: 1, en: [Philemon, Phlm, Phlm], de: [Philemon, Phlm], fr: [Philémon, Phm], it: [Filemone, Fm]}
+- {key: heb, sbl: Heb, chapters: 13, en: [Hebrews, Heb], de: [Hebräer, Hebr], fr: [Hébreux, He], it: [Ebrei, Eb]}
+- {key: jas, sbl: Jas, chapters: 5, en: [James, Jas], de: [Jakobus, Jak], fr: [Jacques, Jc], it: [Giacomo, Gc]}
+- {key: pet, sbl: Pet, numbered: [1, 2], chapters: [5, 3], en: [Peter, Pet], de: [Petrus, Petr], fr: [Pierre, P], it: [Pietro, Pt]}
+- {key: johnep, sbl: John, numbered: [1, 2, 3], chapters: [5, 1, 1], en: [John, Jn], de: [Johannes, Joh], fr: [Jean, Jn], it: [Giovanni, Gv]}
+- {key: jude, sbl: Jude, chapters: 1, en: [Jude], de: [Judas, Jud], fr: [Jude], it: [Giuda, Gd]}
+- {key: rev, sbl: Rev, chapters: 22, en: [Revelation, Apocalypse, Rev, Apoc], de: [Offenbarung, Offb, Apk], fr: [Apocalypse, Ap], it: [Apocalisse, Ap]}

@@ -1,0 +1,8 @@
+# Concepts: themes, technical terms and analytical categories.
+# `name` should be a short English noun phrase; put German/French/Italian/Greek/Hebrew forms in aliases.
+- {name: day's wage, aliases: [daily wage, day wage, Tagelohn, salaire journalier, salario giornaliero]}
+- {name: subsistence, aliases: [subsistence level, Existenzminimum, minimum vital]}
+- {name: monetisation, aliases: [monetization, Monetarisierung, monétisation, monetizzazione]}
+- {name: wage labour, aliases: [wage labor, hired labour, Lohnarbeit, travail salarié, lavoro salariato]}
+- {name: patronage, aliases: [Patronage, patronat, patronato]}
+- {name: taxation, aliases: [tribute, Steuern, fiscalité, tassazione]}

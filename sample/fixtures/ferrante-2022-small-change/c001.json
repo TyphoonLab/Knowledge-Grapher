@@ -1,0 +1,254 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 1890,
+    "cache_read": 0,
+    "cache_write": 5380,
+    "cost_usd": 0.040424
+  },
+  "data": {
+    "document_meta": {
+      "title": "Small Change in the Synoptic Parables: Lepta, Drachmas and Talents",
+      "authors": [
+        "Chiara Ferrante"
+      ],
+      "year": 2022,
+      "venue": "Rivista di Economia Antica 7"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Chiara Ferrante",
+        "aliases": [],
+        "quote": "I side with Renner",
+        "surname": "Ferrante",
+        "given_names": "Chiara",
+        "cited_years": [],
+        "is_document_author": true,
+        "citation": null,
+        "note": "Author per document header; not named in chunk text."
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "Marwick",
+        "aliases": [],
+        "quote": "the debate between Marwick and Renner",
+        "surname": "Marwick",
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "Scholar",
+        "name": "Renner",
+        "aliases": [],
+        "quote": "the debate between Marwick and Renner",
+        "surname": "Renner",
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "Scholar",
+        "name": "Holt",
+        "aliases": [],
+        "quote": "Holt's reconstruction of household budgets",
+        "surname": "Holt",
+        "given_names": null,
+        "cited_years": [
+          1987
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "PrimaryText",
+        "name": "Mt 20,2",
+        "aliases": [],
+        "quote": "as in Mt 20,2",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 20,2",
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [],
+        "quote": "the denarius being a day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n7",
+        "type": "Object",
+        "name": "lepton",
+        "aliases": [],
+        "quote": "from the lepton to the talent",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "Object",
+        "name": "talent",
+        "aliases": [],
+        "quote": "from the lepton to the talent",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "Argument",
+        "name": "the coins of the Synoptic parables form a graded scale of value",
+        "aliases": [],
+        "quote": "The coins of the Synoptic parables form a graded scale of value from the lepton to the talent.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "Argument",
+        "name": "the denarius was a day's wage for an unskilled labourer",
+        "aliases": [],
+        "quote": "Their rhetorical force does not depend on the denarius being a day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": "Marwick/Renner positions not explicit on which side; Ferrante sides with Renner on Mt 20,2."
+      },
+      {
+        "id": "n11",
+        "type": "Concept",
+        "name": "day's wage",
+        "aliases": [],
+        "quote": "the denarius being a day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "I side with Renner",
+        "confidence": "inferred"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "as in Mt 20,2",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n9",
+        "relation": "advances",
+        "quote": "The coins of the Synoptic parables form a graded scale of value from the lepton to the talent.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n9",
+        "relation": "argues",
+        "quote": "The coins of the Synoptic parables form a graded scale of value from the lepton to the talent.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n9",
+        "target": "n7",
+        "relation": "about",
+        "quote": "from the lepton to the talent",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n9",
+        "target": "n8",
+        "relation": "about",
+        "quote": "from the lepton to the talent",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n10",
+        "target": "n6",
+        "relation": "about",
+        "quote": "the denarius being a day's wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n10",
+        "target": "n11",
+        "relation": "about",
+        "quote": "the denarius being a day's wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n6",
+        "target": "n5",
+        "relation": "attested_in",
+        "quote": "Where a wage is in question, as in Mt 20,2",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n1",
+        "target": "n3",
+        "relation": "builds_on",
+        "quote": "I side with Renner",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n1",
+        "target": "n2",
+        "relation": "disagrees_with",
+        "quote": "I side with Renner, although Holt's reconstruction",
+        "confidence": "inferred"
+      },
+      {
+        "source": "DOC",
+        "target": "n4",
+        "relation": "cites",
+        "quote": "Holt 1987, 88–95.",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}

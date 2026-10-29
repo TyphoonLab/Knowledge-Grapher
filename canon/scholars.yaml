@@ -1,0 +1,9 @@
+# Modern scholars. Entries here take precedence over automatic grouping.
+#   name     canonical display name
+#   surname  for surname-only references ("Holt 2004")
+#   given    given name(s) or initials
+#   years    publication years known for this person: used to decide which of several
+#            scholars with the same surname a surname-plus-year citation refers to
+# Example:
+# - {name: Lisbeth Holt, surname: Holt, given: Lisbeth, years: [1987], aliases: [L. Holt]}
+[]

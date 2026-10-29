@@ -1,0 +1,473 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 3905,
+    "cache_read": 0,
+    "cache_write": 6200,
+    "cost_usd": 0.063854
+  },
+  "data": {
+    "document_meta": {
+      "title": "A Denarius a Day: Wage Rhetoric and Subsistence in Matthew 20:1–16",
+      "authors": [
+        "Helena Marwick"
+      ],
+      "year": 2019,
+      "venue": "Journal for the Study of Ancient Economies 12"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Helena Marwick",
+        "aliases": [],
+        "quote": "I argue that the denarius was a day's wage for an unskilled labourer",
+        "surname": "Marwick",
+        "given_names": "Helena",
+        "cited_years": [
+          2019
+        ],
+        "is_document_author": true,
+        "citation": null,
+        "note": "Author from document header; 'I' in text."
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "Lisbeth Holt",
+        "aliases": [
+          "L. Holt"
+        ],
+        "quote": "Following the reconstruction of rural budgets by Lisbeth Holt",
+        "surname": "Holt",
+        "given_names": "Lisbeth",
+        "cited_years": [
+          1987
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "Argument",
+        "name": "the denarius was a day's wage for an unskilled labourer",
+        "aliases": [],
+        "quote": "I argue that the denarius was a day's wage for an unskilled labourer",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "Argument",
+        "name": "the denarius wage in Matthew 20 reflects a subsistence wage in early Roman Galilee",
+        "aliases": [],
+        "quote": "The denarius of Matt 20:2 should be read as a realistic subsistence wage for an unskilled labourer in early Roman Galilee.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "PrimaryText",
+        "name": "Matt 20:4",
+        "aliases": [],
+        "quote": "\"whatever is right\" (Matt 20:4)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 20:4",
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "PrimaryText",
+        "name": "Tob 5:15",
+        "aliases": [],
+        "quote": "In Tob 5:15 Tobit promises the angel Raphael",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Tob 5:15",
+        "note": null
+      },
+      {
+        "id": "n7",
+        "type": "PrimaryText",
+        "name": "Tac. Ann. 1.17",
+        "aliases": [],
+        "quote": "(Tac. Ann. 1.17)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Tac. Ann. 1.17",
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "PrimaryText",
+        "name": "m. B. Meṣ. 7:1",
+        "aliases": [],
+        "quote": "m. B. Meṣ. 7:1",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "m. B. Meṣ. 7:1",
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "PrimaryText",
+        "name": "b. B. Meṣ. 83a",
+        "aliases": [],
+        "quote": "b. B. Meṣ. 83a on the hiring of labourers",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "b. B. Meṣ. 83a",
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "PrimaryText",
+        "name": "Rev 6:6",
+        "aliases": [],
+        "quote": "The famine-price of Rev 6:6",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Rev 6:6",
+        "note": null
+      },
+      {
+        "id": "n11",
+        "type": "PrimaryText",
+        "name": "Matt 20:2",
+        "aliases": [],
+        "quote": "The denarius of Matt 20:2",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 20:2",
+        "note": null
+      },
+      {
+        "id": "n12",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [
+          "δηνάριον",
+          "דינר"
+        ],
+        "quote": "The Hebrew term for the coin, דינר",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n13",
+        "type": "Object",
+        "name": "drachma",
+        "aliases": [
+          "δραχμή"
+        ],
+        "quote": "\"a drachma a day\" (δραχμὴν τῆς ἡμέρας)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n14",
+        "type": "Concept",
+        "name": "subsistence wage",
+        "aliases": [],
+        "quote": "a realistic subsistence wage for an unskilled labourer",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n15",
+        "type": "Concept",
+        "name": "day labour",
+        "aliases": [],
+        "quote": "the terms of a day labourer's hire",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n16",
+        "type": "Place",
+        "name": "Galilee",
+        "aliases": [],
+        "quote": "early Roman Galilee",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n17",
+        "type": "AncientAuthor",
+        "name": "Tacitus",
+        "aliases": [],
+        "quote": "Tacitus reports the mutineers of AD 14",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n18",
+        "type": "Concept",
+        "name": "peasant household budget",
+        "aliases": [],
+        "quote": "a peasant household of five to have required roughly two hundred and fifty denarii a year",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "I argue that the denarius was a day's wage for an unskilled labourer",
+        "confidence": "inferred"
+      },
+      {
+        "source": "DOC",
+        "target": "n3",
+        "relation": "advances",
+        "quote": "I argue that the denarius was a day's wage for an unskilled labourer",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n4",
+        "relation": "advances",
+        "quote": "The denarius of Matt 20:2 should be read as a realistic subsistence wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n3",
+        "relation": "argues",
+        "quote": "I argue that the denarius was a day's wage for an unskilled labourer",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n4",
+        "relation": "argues",
+        "quote": "The denarius of Matt 20:2 should be read as a realistic subsistence wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n2",
+        "relation": "builds_on",
+        "quote": "My argument builds on Holt's model while adjusting her grain prices upward.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "\"whatever is right\" (Matt 20:4)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n6",
+        "relation": "cites",
+        "quote": "In Tob 5:15 Tobit promises the angel Raphael",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n7",
+        "relation": "cites",
+        "quote": "(Tac. Ann. 1.17)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n8",
+        "relation": "cites",
+        "quote": "m. B. Meṣ. 7:1",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n9",
+        "relation": "cites",
+        "quote": "b. B. Meṣ. 83a on the hiring of labourers",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n10",
+        "relation": "cites",
+        "quote": "The famine-price of Rev 6:6",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n11",
+        "relation": "cites",
+        "quote": "The denarius of Matt 20:2",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n17",
+        "relation": "discusses",
+        "quote": "Tacitus reports the mutineers of AD 14",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n12",
+        "relation": "discusses",
+        "quote": "The Hebrew term for the coin, דינר",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n14",
+        "relation": "discusses",
+        "quote": "a realistic subsistence wage for an unskilled labourer",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n16",
+        "relation": "discusses",
+        "quote": "early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n5",
+        "relation": "grounded_in",
+        "quote": "the landowner promises the later workers \"whatever is right\" (Matt 20:4)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n6",
+        "relation": "grounded_in",
+        "quote": "In Tob 5:15 Tobit promises the angel Raphael, disguised as a hired guide, \"a drachma a day\"",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n7",
+        "relation": "grounded_in",
+        "quote": "ten asses a day (Tac. Ann. 1.17)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n8",
+        "relation": "grounded_in",
+        "quote": "the rabbinic regulations on hired labour in m. B. Meṣ. 7:1",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n4",
+        "target": "n10",
+        "relation": "grounded_in",
+        "quote": "The famine-price of Rev 6:6, \"a quart of wheat for a denarius\"",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n4",
+        "target": "n11",
+        "relation": "grounded_in",
+        "quote": "The denarius of Matt 20:2 should be read as a realistic subsistence wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n12",
+        "relation": "about",
+        "quote": "the denarius was a day's wage for an unskilled labourer",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n4",
+        "target": "n14",
+        "relation": "about",
+        "quote": "a realistic subsistence wage for an unskilled labourer",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n4",
+        "target": "n16",
+        "relation": "about",
+        "quote": "early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n11",
+        "relation": "attested_in",
+        "quote": "The denarius of Matt 20:2",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n13",
+        "target": "n6",
+        "relation": "attested_in",
+        "quote": "\"a drachma a day\" (δραχμὴν τῆς ἡμέρας)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n10",
+        "relation": "attested_in",
+        "quote": "\"a quart of wheat for a denarius\" (χοῖνιξ σίτου δηναρίου)",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}

@@ -1,0 +1,583 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 4619,
+    "cache_read": 0,
+    "cache_write": 6159,
+    "cost_usd": 0.07082999999999999
+  },
+  "data": {
+    "document_meta": {
+      "title": "Small Change in the Synoptic Parables: Lepta, Drachmas and Talents",
+      "authors": [
+        "Chiara Ferrante"
+      ],
+      "year": 2022,
+      "venue": "Rivista di Economia Antica 7"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Chiara Ferrante",
+        "aliases": [],
+        "quote": "Chiara Ferrante, Università di Vallombra",
+        "surname": "Ferrante",
+        "given_names": "Chiara",
+        "cited_years": [],
+        "is_document_author": true,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "Marwick",
+        "aliases": [],
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "surname": "Marwick",
+        "given_names": null,
+        "cited_years": [
+          2019
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "Scholar",
+        "name": "Renner",
+        "aliases": [],
+        "quote": "Renner treats it as a narrative convention.",
+        "surname": "Renner",
+        "given_names": null,
+        "cited_years": [
+          2021
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "Scholar",
+        "name": "Okafor",
+        "aliases": [],
+        "quote": "See also the older survey of Okafor 2015.",
+        "surname": "Okafor",
+        "given_names": null,
+        "cited_years": [
+          2015
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "Scholar",
+        "name": "W. Holt",
+        "aliases": [],
+        "quote": "W. Holt's hoard study remains fundamental",
+        "surname": "Holt",
+        "given_names": "W.",
+        "cited_years": [
+          2004
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "AncientAuthor",
+        "name": "Pliny the Elder",
+        "aliases": [],
+        "quote": "Pliny's account of the introduction of silver coinage at Rome",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n7",
+        "type": "PrimaryText",
+        "name": "Mt 20,2",
+        "aliases": [],
+        "quote": "The exchange between Marwick and Renner over Mt 20,2",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 20,2",
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "PrimaryText",
+        "name": "Mc 12,42",
+        "aliases": [],
+        "quote": "In Mc 12,42 the widow puts in",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mc 12,42",
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "PrimaryText",
+        "name": "Mc 12,41",
+        "aliases": [],
+        "quote": "large gifts of the rich (Mc 12,41)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mc 12,41",
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "PrimaryText",
+        "name": "Lc 15,8-10",
+        "aliases": [],
+        "quote": "The woman of Lc 15,8-10 searches her house",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Lc 15,8-10",
+        "note": null
+      },
+      {
+        "id": "n11",
+        "type": "PrimaryText",
+        "name": "Mt 25,14-30",
+        "aliases": [],
+        "quote": "the talents of Mt 25,14-30",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 25,14-30",
+        "note": null
+      },
+      {
+        "id": "n12",
+        "type": "PrimaryText",
+        "name": "Mt 18,24",
+        "aliases": [],
+        "quote": "the ten thousand talents of Mt 18,24",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 18,24",
+        "note": null
+      },
+      {
+        "id": "n13",
+        "type": "PrimaryText",
+        "name": "Plin. nat. 33,44",
+        "aliases": [],
+        "quote": "(Plin. nat. 33,44)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Plin. nat. 33,44",
+        "note": null
+      },
+      {
+        "id": "n14",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [
+          "δηνάριον"
+        ],
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n15",
+        "type": "Object",
+        "name": "lepton",
+        "aliases": [
+          "λεπτόν",
+          "λεπτά"
+        ],
+        "quote": "λεπτὰ δύο, ὅ ἐστιν κοδράντης",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n16",
+        "type": "Object",
+        "name": "quadrans",
+        "aliases": [
+          "κοδράντης"
+        ],
+        "quote": "the quadrans, the smallest Roman coin",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n17",
+        "type": "Object",
+        "name": "drachma",
+        "aliases": [],
+        "quote": "one of ten drachmas",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n18",
+        "type": "Object",
+        "name": "talent",
+        "aliases": [],
+        "quote": "the talents of Mt 25,14-30",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n19",
+        "type": "Argument",
+        "name": "the denarius was a day's wage for an unskilled labourer",
+        "aliases": [],
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n20",
+        "type": "Argument",
+        "name": "the denarius in the parables is a narrative convention, not a realistic wage",
+        "aliases": [],
+        "quote": "Renner treats it as a narrative convention.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n21",
+        "type": "Argument",
+        "name": "the evangelists use coin names as a graded scale of value independent of wage equivalence",
+        "aliases": [],
+        "quote": "The evangelists use the same graded scale: lepton, quadrans, drachma, denarius, talent.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n22",
+        "type": "Argument",
+        "name": "the parable's drachmas are a household reserve rather than wages",
+        "aliases": [],
+        "quote": "The parable's drachmas are therefore a household reserve, perhaps a dowry, rather than wages.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n23",
+        "type": "Concept",
+        "name": "day's wage",
+        "aliases": [],
+        "quote": "the denarius as a \"day's wage\"",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n24",
+        "type": "Place",
+        "name": "Galilee",
+        "aliases": [],
+        "quote": "small silver in Galilean villages",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "Chiara Ferrante, Università di Vallombra",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n7",
+        "relation": "cites",
+        "quote": "The exchange between Marwick and Renner over Mt 20,2",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n8",
+        "relation": "cites",
+        "quote": "In Mc 12,42 the widow puts in",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n9",
+        "relation": "cites",
+        "quote": "large gifts of the rich (Mc 12,41)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n10",
+        "relation": "cites",
+        "quote": "The woman of Lc 15,8-10 searches her house",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n11",
+        "relation": "cites",
+        "quote": "the talents of Mt 25,14-30",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n12",
+        "relation": "cites",
+        "quote": "the ten thousand talents of Mt 18,24",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n13",
+        "relation": "cites",
+        "quote": "(Plin. nat. 33,44)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n6",
+        "relation": "discusses",
+        "quote": "Pliny's account of the introduction of silver coinage at Rome",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n24",
+        "relation": "discusses",
+        "quote": "small silver in Galilean villages",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n23",
+        "relation": "discusses",
+        "quote": "the denarius as a \"day's wage\"",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n21",
+        "relation": "advances",
+        "quote": "The evangelists use the same graded scale: lepton, quadrans, drachma, denarius, talent.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n22",
+        "relation": "advances",
+        "quote": "The parable's drachmas are therefore a household reserve, perhaps a dowry, rather than wages.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n21",
+        "relation": "argues",
+        "quote": "The evangelists use the same graded scale: lepton, quadrans, drachma, denarius, talent.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n22",
+        "relation": "argues",
+        "quote": "The parable's drachmas are therefore a household reserve, perhaps a dowry, rather than wages.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n2",
+        "target": "n19",
+        "relation": "argues",
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n20",
+        "relation": "argues",
+        "quote": "Renner treats it as a narrative convention.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n3",
+        "target": "n2",
+        "relation": "disagrees_with",
+        "quote": "The exchange between Marwick and Renner over Mt 20,2",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n1",
+        "target": "n3",
+        "relation": "builds_on",
+        "quote": "I build on Renner's observation that the denarius was the coin of taxation",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n19",
+        "target": "n7",
+        "relation": "grounded_in",
+        "quote": "The exchange between Marwick and Renner over Mt 20,2",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n19",
+        "target": "n14",
+        "relation": "about",
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n19",
+        "target": "n23",
+        "relation": "about",
+        "quote": "Marwick defends the denarius as a realistic day's wage",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n20",
+        "target": "n14",
+        "relation": "about",
+        "quote": "Renner treats it as a narrative convention.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n21",
+        "target": "n13",
+        "relation": "grounded_in",
+        "quote": "shows how far ancient writers themselves thought of denominations as a hierarchy",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n22",
+        "target": "n10",
+        "relation": "grounded_in",
+        "quote": "The woman of Lc 15,8-10 searches her house for one of ten drachmas.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n22",
+        "target": "n17",
+        "relation": "about",
+        "quote": "The parable's drachmas are therefore a household reserve",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n22",
+        "target": "n24",
+        "relation": "about",
+        "quote": "small silver in Galilean villages",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n15",
+        "target": "n8",
+        "relation": "attested_in",
+        "quote": "In Mc 12,42 the widow puts in \"two lepta, which make a quadrans\"",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n16",
+        "target": "n8",
+        "relation": "attested_in",
+        "quote": "In Mc 12,42 the widow puts in \"two lepta, which make a quadrans\"",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n17",
+        "target": "n10",
+        "relation": "attested_in",
+        "quote": "searches her house for one of ten drachmas",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n18",
+        "target": "n11",
+        "relation": "attested_in",
+        "quote": "the talents of Mt 25,14-30",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n14",
+        "target": "n7",
+        "relation": "attested_in",
+        "quote": "The exchange between Marwick and Renner over Mt 20,2",
+        "confidence": "inferred"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "W. Holt, _Coin Hoards of Lower Galilee_ (2004), 115–131.",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}

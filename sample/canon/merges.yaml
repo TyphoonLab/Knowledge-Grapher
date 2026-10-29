@@ -1,0 +1,5 @@
+# Merge decisions. Written by `corpus-graph merges approve|reject`; you can also edit by hand.
+#   approved: {type, members: [node ids], into: node id}
+#   rejected: {type, members: [node ids]}
+approved: []
+rejected: []

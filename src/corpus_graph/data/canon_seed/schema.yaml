@@ -1,0 +1,34 @@
+# corpus-graph schema. Edit this file to add node or edge types (see README,
+# "Adding a node or edge type"). The extractor prompt, the resolver's edge
+# validation and the viewer legend are all generated from it.
+#
+# Relations the extractor wants but which are not listed here are written to
+# work/schema_proposals.json and never enter the graph until added below.
+
+node_types:
+  Document:      {registry: null,                  shape: square,   description: "A source document in input/."}
+  Scholar:       {registry: scholars.yaml,         shape: circle,   description: "A modern scholar (author or cited)."}
+  AncientAuthor: {registry: ancient_authors.yaml,  shape: diamond,  description: "An ancient author (Pliny the Elder, Josephus, Philo). Cited passages of their works are PrimaryText nodes."}
+  PrimaryText:   {registry: primary_texts.yaml,    shape: triangle, description: "A cited locus in an ancient text (Mark 6:37, Tac. Ann. 1.17). Parsed into book/chapter/verse."}
+  Concept:       {registry: concepts.yaml,         shape: hexagon,  description: "A theme, term or analytical category (wage labour, patronage, δηνάριον)."}
+  Object:        {registry: coins_and_objects.yaml, shape: star,    description: "A coin type, inscription, papyrus, ostracon or artifact."}
+  Place:         {registry: places.yaml,           shape: pentagon, description: "A geographical place (Galilee, Sepphoris, Oxyrhynchus)."}
+  Period:        {registry: periods.yaml,          shape: cross,    description: "A historical period or date range (Herodian period, Second Temple period)."}
+  Argument:      {registry: arguments.yaml,        shape: wye,      description: "A named scholarly claim, e.g. 'the denarius was a day's wage'."}
+
+# Each edge type lists the allowed (source, target) node-type pairs.
+# `derived: true` edges are added deterministically by the resolver, not by the LLM.
+edge_types:
+  written_by:    {pairs: [[Document, Scholar]]}
+  cites:         {pairs: [[Document, PrimaryText]]}
+  discusses:     {pairs: [[Document, Concept], [Document, Object], [Document, Place], [Document, Period], [Document, AncientAuthor]]}
+  advances:      {pairs: [[Document, Argument]]}
+  argues:        {pairs: [[Scholar, Argument]]}
+  disputes:      {pairs: [[Scholar, Argument]]}
+  disagrees_with: {pairs: [[Scholar, Scholar]]}
+  builds_on:     {pairs: [[Scholar, Scholar]]}
+  grounded_in:   {pairs: [[Argument, PrimaryText], [Argument, Object]]}
+  about:         {pairs: [[Argument, Concept], [Argument, Object], [Argument, Place], [Argument, Period]]}
+  attested_in:   {pairs: [[Object, PrimaryText]]}
+  related_to:    {pairs: [[Concept, Concept]], note: "use sparingly; prefer typed edges"}
+  attributed_to: {pairs: [[PrimaryText, AncientAuthor]], derived: true, note: "added from the locus tables, confidence inferred"}

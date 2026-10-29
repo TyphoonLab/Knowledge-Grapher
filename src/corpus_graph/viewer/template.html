@@ -1,0 +1,664 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>corpus-graph</title>
+<style>
+:root {
+  --bg: #fbfaf7; --panel: #ffffff; --ink: #1d1f23; --muted: #5d6470; --line: #e3e1db;
+  --accent: #2f5fd0; --warn: #b4540a; --edge: rgba(60,64,72,0.16); --edge-hi: rgba(47,95,208,0.85);
+  --label: #1d1f23; --label-halo: rgba(251,250,247,0.9); --chip: #f1efe9; --quote: #f6f4ee;
+  --shadow: 0 1px 2px rgba(0,0,0,.06), 0 4px 14px rgba(0,0,0,.06);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15171b; --panel: #1d2026; --ink: #e8e6e1; --muted: #9aa1ad; --line: #2e323a;
+    --accent: #7ea2ff; --warn: #f0a35b; --edge: rgba(200,205,215,0.13); --edge-hi: rgba(126,162,255,0.9);
+    --label: #e8e6e1; --label-halo: rgba(21,23,27,0.9); --chip: #262a31; --quote: #22262d;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15171b; --panel: #1d2026; --ink: #e8e6e1; --muted: #9aa1ad; --line: #2e323a;
+  --accent: #7ea2ff; --warn: #f0a35b; --edge: rgba(200,205,215,0.13); --edge-hi: rgba(126,162,255,0.9);
+  --label: #e8e6e1; --label-halo: rgba(21,23,27,0.9); --chip: #262a31; --quote: #22262d;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+  font: 14px/1.45 ui-sans-serif, system-ui, -apple-system, "Segoe UI", "Noto Sans", sans-serif; }
+button, input, select { font: inherit; color: inherit; }
+#app { display: grid; grid-template-columns: 260px 1fr 380px; grid-template-rows: 52px 1fr; height: 100vh; }
+header { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; padding: 0 14px;
+  border-bottom: 1px solid var(--line); background: var(--panel); min-width: 0; }
+header h1 { font-size: 15px; font-weight: 650; margin: 0 8px 0 0; white-space: nowrap; }
+header .stats { color: var(--muted); font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.spacer { flex: 1; }
+.btn { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 5px 10px; cursor: pointer; white-space: nowrap; }
+.btn:hover { border-color: var(--accent); }
+.btn.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+#searchwrap { position: relative; width: min(340px, 40vw); }
+#search { width: 100%; border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; background: var(--bg); }
+#suggest { position: absolute; top: 36px; left: 0; right: 0; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 8px; box-shadow: var(--shadow); z-index: 20; max-height: 360px; overflow: auto; display: none; }
+#suggest div { padding: 6px 10px; cursor: pointer; display: flex; gap: 8px; align-items: baseline; }
+#suggest div.active, #suggest div:hover { background: var(--chip); }
+#suggest small { color: var(--muted); }
+aside { overflow: auto; background: var(--panel); min-height: 0; }
+#left { border-right: 1px solid var(--line); padding: 12px; }
+#right { border-left: 1px solid var(--line); padding: 14px; }
+h2 { font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 16px 0 6px; }
+h2:first-child { margin-top: 0; }
+.row { display: flex; align-items: center; gap: 6px; padding: 2px 0; cursor: pointer; user-select: none; }
+.row input { margin: 0; }
+.row .count { margin-left: auto; color: var(--muted); font-size: 12px; }
+.sw { width: 12px; height: 12px; border-radius: 3px; flex: none; }
+svg.shape { flex: none; }
+#communities { max-height: 260px; overflow: auto; }
+#docsel { width: 100%; min-height: 90px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); }
+.years { display: grid; grid-template-columns: 1fr auto; gap: 4px; align-items: center; }
+.years input { width: 100%; }
+#stage { position: relative; min-width: 0; min-height: 0; }
+canvas { display: block; width: 100%; height: 100%; touch-action: none; }
+#hint { position: absolute; left: 12px; bottom: 10px; color: var(--muted); font-size: 12px; background: var(--panel);
+  border: 1px solid var(--line); border-radius: 8px; padding: 4px 8px; max-width: calc(100% - 24px); }
+#crumb { position: absolute; left: 12px; top: 10px; display: none; gap: 6px; }
+#tooltip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 8px; font-size: 12px; box-shadow: var(--shadow); display: none; max-width: 320px; }
+.badge { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 999px; background: var(--chip); color: var(--muted); margin-right: 4px; }
+.badge.warn { color: var(--warn); }
+.name { font-size: 18px; font-weight: 650; margin: 6px 0 2px; overflow-wrap: anywhere; }
+.id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12px; color: var(--muted); overflow-wrap: anywhere; }
+.aliases { color: var(--muted); font-size: 13px; margin: 6px 0; overflow-wrap: anywhere; }
+details { border-top: 1px solid var(--line); padding: 6px 0; }
+summary { cursor: pointer; font-weight: 600; }
+summary .count { color: var(--muted); font-weight: 400; }
+.edge { padding: 4px 0 4px 4px; }
+.edge .lnk { color: var(--accent); cursor: pointer; }
+.edge .meta { color: var(--muted); font-size: 12px; }
+blockquote { margin: 6px 0; padding: 6px 10px; background: var(--quote); border-left: 3px solid var(--accent); border-radius: 4px; overflow-wrap: anywhere; }
+blockquote .src { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+blockquote a, .aliases a { color: var(--accent); }
+.doc { padding: 8px 0; border-top: 1px solid var(--line); cursor: pointer; }
+.doc:hover .t { color: var(--accent); }
+.doc .t { font-weight: 600; }
+.doc .m { color: var(--muted); font-size: 12px; }
+.empty { color: var(--muted); }
+.pathstep { padding: 6px 0; border-top: 1px solid var(--line); }
+#toggleLeft, #toggleRight { display: none; }
+@media (max-width: 900px) {
+  #app { grid-template-columns: 1fr; grid-template-rows: auto 1fr; }
+  header { flex-wrap: wrap; height: auto; padding: 8px 16px; gap: 8px; }
+  #searchwrap { width: 100%; order: 10; }
+  #left, #right { position: fixed; top: 0; bottom: 0; width: min(92vw, 380px); z-index: 30; box-shadow: var(--shadow); display: none; }
+  #left { left: 0; } #right { right: 0; }
+  #left.open, #right.open { display: block; }
+  #toggleLeft, #toggleRight { display: inline-block; }
+  #stage { grid-row: 2; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button class="btn" id="toggleLeft" title="Filters">☰</button>
+    <h1>corpus-graph</h1>
+    <span class="stats" id="stats"></span>
+    <div class="spacer"></div>
+    <div id="searchwrap"><input id="search" placeholder="Search nodes, aliases, loci…" autocomplete="off" aria-label="Search"><div id="suggest" role="listbox"></div></div>
+    <button class="btn" id="modePath" title="Shortest path between two nodes">Path</button>
+    <button class="btn" id="modeDocs" title="List documents and their nodes">Documents</button>
+    <button class="btn" id="modeComm" title="Community overview">Communities</button>
+    <button class="btn" id="reset" title="Unpin all nodes and reset the view">Reset</button>
+    <button class="btn" id="toggleRight" title="Details">ⓘ</button>
+  </header>
+  <aside id="left">
+    <h2>Node types</h2><div id="types"></div>
+    <label class="row"><input type="checkbox" id="hideUnresolved"> Hide unresolved <span class="count" id="unresCount"></span></label>
+    <h2>Communities</h2>
+    <div class="row"><button class="btn" id="commAll">all</button><button class="btn" id="commNone">none</button></div>
+    <div id="communities"></div>
+    <h2>Documents</h2>
+    <select id="docsel" multiple aria-label="Filter by document"></select>
+    <div class="row"><button class="btn" id="docClear">clear</button><span class="count">ctrl/⌘-click for several</span></div>
+    <h2>Year range</h2>
+    <div class="years"><input type="range" id="yearMin"><span id="yearMinV"></span><input type="range" id="yearMax"><span id="yearMaxV"></span></div>
+    <h2>Relations</h2><div id="relations"></div>
+  </aside>
+  <main id="stage">
+    <canvas id="canvas"></canvas>
+    <div id="crumb"><button class="btn" id="crumbBack">← all communities</button><span class="badge" id="crumbLabel"></span></div>
+    <div id="tooltip"></div>
+    <div id="hint">Drag to pin · double-click to unpin · scroll to zoom · click a node for details</div>
+  </main>
+  <aside id="right"><div id="panel"><p class="empty">Click a node to see its type, names, typed edges and the quotes that support them.</p></div></aside>
+</div>
+<script>/*__D3__*/</script>
+<script id="graph-data" type="application/json">/*__GRAPH__*/</script>
+<script>
+"use strict";
+const G = JSON.parse(document.getElementById("graph-data").textContent);
+const SERVED = location.protocol.startsWith("http");
+const COMMUNITY_THRESHOLD = 3000;
+
+// ------------------------------------------------------------------ data
+const nodes = G.nodes.map(n => Object.assign({}, n));
+const byId = new Map(nodes.map(n => [n.id, n]));
+const docByHash = new Map(G.documents.map(d => [d.hash, d]));
+const docByShort = new Map(G.documents.map(d => [d.hash.slice(0, 12), d]));
+const authored = new Map();  // scholar id -> Set of short doc hashes they wrote
+G.edges.forEach(e => { if (e.relation === "written_by") { const d = G.documents.find(x => x.id === e.source); if (d) { if (!authored.has(e.target)) authored.set(e.target, new Set()); authored.get(e.target).add(d.hash); } } });
+const rankProv = l => { const own = authored.get(l.s) || new Set(); return [...l.provenance].sort((a, b) => own.has(b.doc) - own.has(a.doc)); };
+const links = G.edges.filter(e => byId.has(e.source) && byId.has(e.target)).map(e => Object.assign({}, e, {s: e.source, t: e.target}));
+const adj = new Map(nodes.map(n => [n.id, []]));
+links.forEach(l => { adj.get(l.s).push(l); adj.get(l.t).push(l); });
+nodes.forEach(n => {
+  const ys = (n.docs || []).map(h => { const d = docByShort.get(h); return d && d.year; }).filter(Boolean);
+  n.years = ys; n.docset = new Set(n.docs || []);
+});
+const types = Object.keys(G.meta.schema.node_types).filter(t => nodes.some(n => n.type === t));
+const shapes = Object.fromEntries(Object.entries(G.meta.schema.node_types).map(([t, d]) => [t, d.shape || "circle"]));
+const relations = [...new Set(links.map(l => l.relation))].sort();
+const palette = [...d3.schemeTableau10, ...d3.schemeSet2, ...d3.schemeDark2, ...d3.schemePaired];
+const commColor = c => c < palette.length ? palette[c] : d3.hsl((c * 137.508) % 360, 0.55, 0.55).formatHex();
+
+// ------------------------------------------------------------------ state
+const state = {
+  types: new Set(types), comms: new Set(G.communities.map(c => c.id)), docs: new Set(), rels: new Set(relations),
+  hideUnresolved: false, yearMin: null, yearMax: null, selected: null, hover: null,
+  mode: "graph", pathPick: [], path: null, communityView: false, drill: null,
+};
+const yr = G.meta.year_range || [0, 0];
+state.yearMin = yr[0]; state.yearMax = yr[1];
+
+// ------------------------------------------------------------------ left panel
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+function shapeIcon(shape, color) {
+  const s = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  s.setAttribute("width", 14); s.setAttribute("height", 14); s.setAttribute("viewBox", "-7 -7 14 14"); s.classList.add("shape");
+  const p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  p.setAttribute("d", shapePath(shape, 5.5)); p.setAttribute("fill", color || "currentColor");
+  s.appendChild(p); return s;
+}
+function shapePath(shape, r) {
+  const poly = k => d3.range(k).map(i => { const a = -Math.PI / 2 + i * 2 * Math.PI / k; return [r * Math.cos(a), r * Math.sin(a)]; });
+  const P = pts => "M" + pts.map(p => p.join(",")).join("L") + "Z";
+  const area = r * r * 3.2;
+  switch (shape) {
+    case "square": return d3.symbol(d3.symbolSquare, area)();
+    case "triangle": return d3.symbol(d3.symbolTriangle, area)();
+    case "diamond": return d3.symbol(d3.symbolDiamond, area)();
+    case "star": return d3.symbol(d3.symbolStar, area)();
+    case "cross": return d3.symbol(d3.symbolCross, area)();
+    case "wye": return d3.symbol(d3.symbolWye, area)();
+    case "hexagon": return P(poly(6));
+    case "pentagon": return P(poly(5));
+    default: return d3.symbol(d3.symbolCircle, area)();
+  }
+}
+const pathCache = new Map();
+function shapePath2D(shape, r) {
+  const k = shape + ":" + r.toFixed(1);
+  if (!pathCache.has(k)) pathCache.set(k, new Path2D(shapePath(shape, r)));
+  return pathCache.get(k);
+}
+function buildFilters() {
+  const tdiv = document.getElementById("types");
+  types.forEach(t => {
+    const l = document.createElement("label"); l.className = "row";
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true;
+    cb.onchange = () => { cb.checked ? state.types.add(t) : state.types.delete(t); refresh(); };
+    l.append(cb, shapeIcon(shapes[t]), document.createTextNode(" " + t));
+    const c = document.createElement("span"); c.className = "count"; c.textContent = nodes.filter(n => n.type === t).length; l.append(c);
+    tdiv.append(l);
+  });
+  const cdiv = document.getElementById("communities");
+  G.communities.forEach(c => {
+    const l = document.createElement("label"); l.className = "row"; l.title = c.label;
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true; cb.dataset.c = c.id;
+    cb.onchange = () => { cb.checked ? state.comms.add(c.id) : state.comms.delete(c.id); refresh(); };
+    const sw = document.createElement("span"); sw.className = "sw"; sw.style.background = commColor(c.id);
+    const txt = document.createElement("span"); txt.textContent = `C${c.id} ${c.llm_label || c.label}`;
+    txt.style.cssText = "overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0";
+    const cnt = document.createElement("span"); cnt.className = "count"; cnt.textContent = c.size;
+    l.append(cb, sw, txt, cnt); cdiv.append(l);
+  });
+  const setAll = v => { cdiv.querySelectorAll("input").forEach(cb => { cb.checked = v; v ? state.comms.add(+cb.dataset.c) : state.comms.delete(+cb.dataset.c); }); refresh(); };
+  document.getElementById("commAll").onclick = () => setAll(true);
+  document.getElementById("commNone").onclick = () => setAll(false);
+  const ds = document.getElementById("docsel");
+  [...G.documents].sort((a, b) => (a.year || 0) - (b.year || 0)).forEach(d => {
+    const o = document.createElement("option"); o.value = d.hash.slice(0, 12);
+    o.textContent = `${(d.authors || []).map(a => a.split(" ").slice(-1)[0]).join(", ")} ${d.year || ""} · ${d.title}`; ds.append(o);
+  });
+  ds.onchange = () => { state.docs = new Set([...ds.selectedOptions].map(o => o.value)); refresh(); };
+  document.getElementById("docClear").onclick = () => { [...ds.options].forEach(o => o.selected = false); state.docs.clear(); refresh(); };
+  const ymin = document.getElementById("yearMin"), ymax = document.getElementById("yearMax");
+  [ymin, ymax].forEach(i => { i.min = yr[0]; i.max = yr[1]; i.step = 1; });
+  ymin.value = yr[0]; ymax.value = yr[1];
+  const showY = () => { document.getElementById("yearMinV").textContent = ymin.value; document.getElementById("yearMaxV").textContent = ymax.value; };
+  ymin.oninput = () => { if (+ymin.value > +ymax.value) ymax.value = ymin.value; state.yearMin = +ymin.value; state.yearMax = +ymax.value; showY(); refresh(); };
+  ymax.oninput = () => { if (+ymax.value < +ymin.value) ymin.value = ymax.value; state.yearMin = +ymin.value; state.yearMax = +ymax.value; showY(); refresh(); };
+  showY();
+  const rdiv = document.getElementById("relations");
+  relations.forEach(r => {
+    const l = document.createElement("label"); l.className = "row";
+    const cb = document.createElement("input"); cb.type = "checkbox"; cb.checked = true;
+    cb.onchange = () => { cb.checked ? state.rels.add(r) : state.rels.delete(r); refresh(); };
+    const cnt = document.createElement("span"); cnt.className = "count"; cnt.textContent = links.filter(l => l.relation === r).length;
+    l.append(cb, document.createTextNode(" " + r), cnt); rdiv.append(l);
+  });
+  const hu = document.getElementById("hideUnresolved");
+  document.getElementById("unresCount").textContent = nodes.filter(n => n.unresolved).length;
+  hu.onchange = () => { state.hideUnresolved = hu.checked; refresh(); };
+}
+
+// ------------------------------------------------------------------ visibility
+function nodeVisible(n) {
+  if (!state.types.has(n.type)) return false;
+  if (!state.comms.has(n.community)) return false;
+  if (state.hideUnresolved && n.unresolved) return false;
+  if (state.drill !== null && n.community !== state.drill) return false;
+  if (state.docs.size && ![...n.docset].some(h => state.docs.has(h))) return false;
+  if (yr[0] && (state.yearMin > yr[0] || state.yearMax < yr[1])) {
+    if (!n.years.length || !n.years.some(y => y >= state.yearMin && y <= state.yearMax)) return false;
+  }
+  return true;
+}
+let vNodes = [], vLinks = [], cNodes = [], cLinks = [];
+function computeVisible() {
+  vNodes = nodes.filter(nodeVisible);
+  const vs = new Set(vNodes.map(n => n.id));
+  vLinks = links.filter(l => state.rels.has(l.relation) && vs.has(l.s) && vs.has(l.t));
+  state.communityView = state.forceCommunities || (vNodes.length > COMMUNITY_THRESHOLD && state.drill === null);
+  if (state.communityView) {
+    const sizes = d3.rollup(vNodes, v => v.length, n => n.community);
+    cNodes = [...sizes].map(([c, size]) => {
+      const meta = G.communities.find(x => x.id === c) || {label: ""};
+      return {id: "C" + c, community: c, size, canonical_name: `C${c} · ${meta.llm_label || meta.label}`, type: "Community"};
+    });
+    const w = new Map();
+    vLinks.forEach(l => {
+      const a = byId.get(l.s).community, b = byId.get(l.t).community;
+      if (a === b) return;
+      const k = a < b ? a + "|" + b : b + "|" + a; w.set(k, (w.get(k) || 0) + 1);
+    });
+    cLinks = [...w].map(([k, v]) => { const [a, b] = k.split("|"); return {s: "C" + a, t: "C" + b, weight: v}; });
+  }
+}
+
+// ------------------------------------------------------------------ canvas + simulation
+const canvas = document.getElementById("canvas"), ctx = canvas.getContext("2d");
+let W = 0, H = 0, dpr = 1, transform = d3.zoomIdentity;
+function resize() {
+  const r = canvas.getBoundingClientRect(); dpr = window.devicePixelRatio || 1;
+  W = r.width; H = r.height; canvas.width = W * dpr; canvas.height = H * dpr; draw();
+}
+const radius = n => n.type === "Community" ? 6 + Math.sqrt(n.size) * 2.2 : 3.2 + Math.sqrt(n.degree || 0) * 1.25;
+let fitPending = true, userZoomed = false;
+let sim = d3.forceSimulation().alphaDecay(0.035).velocityDecay(0.35).on("tick", () => {
+  if (fitPending && sim.alpha() < 0.12) { fitPending = false; fit(); }
+  draw();
+}).on("end", () => { if (!userZoomed) fit(400); });
+function fit(duration = 600) {
+  const ns = sim.nodes(); if (!ns.length || !W) return;
+  const xs = ns.map(n => n.x), ys = ns.map(n => n.y);
+  const x0 = d3.min(xs), x1 = d3.max(xs), y0 = d3.min(ys), y1 = d3.max(ys);
+  const k = Math.min(4, 0.86 * Math.min(W / Math.max(40, x1 - x0 + 160), H / Math.max(40, y1 - y0 + 60)));
+  const t = d3.zoomIdentity.translate(-(x0 + x1) / 2 * k, -(y0 + y1) / 2 * k).scale(k);
+  d3.select(canvas).transition().duration(duration).call(zoom.transform, t);
+}
+function restart(alpha = 0.8) {
+  computeVisible();
+  const N = state.communityView ? cNodes : vNodes;
+  const L = state.communityView ? cLinks : vLinks;
+  const idx = new Map(N.map(n => [n.id, n]));
+  const simLinks = L.map(l => ({source: idx.get(l.s), target: idx.get(l.t), data: l})).filter(l => l.source && l.target);
+  const big = N.length > 1200, small = N.length < 300;
+  if (alpha >= 0.8) { fitPending = true; userZoomed = false; }
+  sim.nodes(N)
+    .force("link", d3.forceLink(simLinks).distance(l => state.communityView ? 120 : (l.data.derived ? 70 : (small ? 60 : 38))).strength(l => state.communityView ? 0.05 : 0.35))
+    .force("charge", d3.forceManyBody().strength(state.communityView ? -400 : (big ? -18 : (small ? -160 : -55))).theta(big ? 1.1 : 0.9).distanceMax(big ? 250 : 500))
+    .force("x", d3.forceX(0).strength(0.04)).force("y", d3.forceY(0).strength(0.04))
+    .force("collide", d3.forceCollide(n => radius(n) + 1.5).iterations(big ? 1 : 2));
+  sim.simLinks = simLinks;
+  sim.alphaMin(big ? 0.02 : 0.001);
+  if (big && alpha >= 0.8 && !N.some(n => n.x != null && n._settled)) {
+    // settle large layouts before the first frame instead of animating the slow phase
+    sim.stop(); sim.alpha(alpha);
+    for (let i = 0; i < 80; i++) sim.tick();
+    N.forEach(n => n._settled = true);
+    sim.alpha(0.25).restart(); fit(0);
+  } else {
+    sim.alpha(alpha).restart();
+  }
+  updateStats();
+}
+function highlightSet() {
+  const hi = new Set(), hiL = new Set();
+  if (state.path) { state.path.nodes.forEach(n => hi.add(n)); state.path.links.forEach(l => hiL.add(l)); return {hi, hiL, strict: true}; }
+  const focus = state.hover || state.selected;
+  if (focus && byId.has(focus)) { hi.add(focus); adj.get(focus).forEach(l => { hiL.add(l); hi.add(l.s); hi.add(l.t); }); }
+  return {hi, hiL, strict: false};
+}
+let colors = {};
+function readColors() {
+  colors = {edge: css("--edge"), edgeHi: css("--edge-hi"), warn: css("--warn"), ink: css("--ink"),
+            accent: css("--accent"), label: css("--label"), halo: css("--label-halo")};
+}
+let frame = null;
+function draw() { if (frame === null) frame = requestAnimationFrame(() => { frame = null; render(); }); }
+function render() {
+  if (!W) return;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, H);
+  ctx.translate(W / 2 + transform.x, H / 2 + transform.y); ctx.scale(transform.k, transform.k);
+  const {hi, hiL, strict} = highlightSet();
+  const dim = hi.size > 0, k = transform.k;
+  const ns = sim.nodes(), many = ns.length > 1000;
+  // edges: one path for all
+  ctx.lineWidth = 1 / k; ctx.strokeStyle = colors.edge; ctx.beginPath();
+  for (const l of sim.simLinks || []) {
+    if (dim && hiL.has(l.data)) continue;
+    ctx.moveTo(l.source.x, l.source.y); ctx.lineTo(l.target.x, l.target.y);
+  }
+  ctx.globalAlpha = dim ? 0.35 : 1; ctx.stroke(); ctx.globalAlpha = 1;
+  if (dim) {
+    ctx.strokeStyle = colors.edgeHi; ctx.lineWidth = (strict ? 2.6 : 1.6) / k;
+    for (const l of sim.simLinks || []) {
+      if (!hiL.has(l.data)) continue;
+      ctx.beginPath(); ctx.moveTo(l.source.x, l.source.y); ctx.lineTo(l.target.x, l.target.y); ctx.stroke();
+      arrow(l.source, l.target, radius(l.target));
+    }
+  }
+  // nodes, batched by fill colour
+  const byColor = new Map();
+  for (const n of ns) { const c = commColor(n.community); if (!byColor.has(c)) byColor.set(c, []); byColor.get(c).push(n); }
+  for (const [c, list] of byColor) {
+    ctx.fillStyle = c;
+    for (const pass of [true, false]) {  // faded first, then highlighted on top
+      if (!dim && pass) continue;
+      ctx.globalAlpha = pass ? 0.18 : 1;
+      for (const n of list) {
+        if (dim && pass === hi.has(n.id)) continue;
+        const r = radius(n);
+        if (r * k < 1.8 && !hi.has(n.id)) { ctx.fillRect(n.x - r, n.y - r, 2 * r, 2 * r); continue; }  // level of detail
+        ctx.translate(n.x, n.y); ctx.fill(shapePath2D(n.type === "Community" ? "circle" : shapes[n.type], r)); ctx.translate(-n.x, -n.y);
+      }
+    }
+  }
+  ctx.globalAlpha = 1;
+  for (const n of ns) {  // outlines: unresolved (dashed), pinned, selected
+    if (!(n.unresolved || n.fx != null || n.id === state.selected)) continue;
+    const r = radius(n);
+    ctx.translate(n.x, n.y);
+    if (n.unresolved) { ctx.setLineDash([2 / k, 2 / k]); ctx.strokeStyle = colors.warn; ctx.lineWidth = 1.5 / k; ctx.stroke(shapePath2D(shapes[n.type], r + 1.5)); ctx.setLineDash([]); }
+    if (n.fx != null) { ctx.strokeStyle = colors.ink; ctx.lineWidth = 1.2 / k; ctx.stroke(shapePath2D("circle", r + 3)); }
+    if (n.id === state.selected) { ctx.strokeStyle = colors.accent; ctx.lineWidth = 2.5 / k; ctx.stroke(shapePath2D("circle", r + 4)); }
+    ctx.translate(-n.x, -n.y);
+  }
+  // labels: highlighted nodes, plus the best-connected ones (capped), plus everything when zoomed in
+  ctx.font = `${12 / k}px system-ui, sans-serif`; ctx.textBaseline = "middle";
+  ctx.lineWidth = 3 / k; ctx.strokeStyle = colors.halo; ctx.fillStyle = colors.label;
+  const showAll = k > 2.2 || ns.length < 25;
+  const labelDegree = ns.length < 150 ? 5 : 8;
+  let budget = many ? 60 : 400;
+  const ordered = many ? [...ns].sort((a, b) => (b.degree || 0) - (a.degree || 0)) : ns;
+  for (const n of ordered) {
+    const important = n.type === "Community" || (n.degree || 0) >= labelDegree;
+    const want = hi.has(n.id) || (!dim && (showAll || (important && k > 0.6)));
+    if (!want) continue;
+    if (!hi.has(n.id) && budget-- <= 0) continue;
+    const sx = n.x * k + transform.x + W / 2, sy = n.y * k + transform.y + H / 2;
+    if (sx < -200 || sx > W + 50 || sy < -20 || sy > H + 20) continue;  // off screen
+    let t = n.canonical_name; if (t.length > 42) t = t.slice(0, 40) + "…";
+    const x = n.x + radius(n) + 3 / k;
+    ctx.strokeText(t, x, n.y); ctx.fillText(t, x, n.y);
+  }
+}
+function arrow(a, b, rb) {
+  const dx = b.x - a.x, dy = b.y - a.y, len = Math.hypot(dx, dy) || 1, ux = dx / len, uy = dy / len;
+  const tx = b.x - ux * (rb + 2), ty = b.y - uy * (rb + 2), s = 6 / transform.k;
+  ctx.beginPath(); ctx.moveTo(tx, ty); ctx.lineTo(tx - ux * s - uy * s * 0.5, ty - uy * s + ux * s * 0.5);
+  ctx.lineTo(tx - ux * s + uy * s * 0.5, ty - uy * s - ux * s * 0.5); ctx.closePath(); ctx.fillStyle = colors.edgeHi; ctx.fill();
+}
+function toGraph(px, py) { return [(px - W / 2 - transform.x) / transform.k, (py - H / 2 - transform.y) / transform.k]; }
+function nodeAt(px, py) {
+  const [x, y] = toGraph(px, py);
+  let best = null, bd = Infinity;
+  for (const n of sim.nodes()) { const d = Math.hypot(n.x - x, n.y - y); if (d < radius(n) + 4 / transform.k && d < bd) { best = n; bd = d; } }
+  return best;
+}
+const zoom = d3.zoom().scaleExtent([0.05, 12]).filter(ev => !ev.button && ev.type !== "dblclick")
+  .on("zoom", ev => { transform = ev.transform; if (ev.sourceEvent) userZoomed = true; draw(); });
+// drag is registered before zoom so that grabbing a node does not pan the canvas
+d3.select(canvas)
+  .call(d3.drag().container(canvas)
+    .subject(ev => { const n = nodeAt(ev.x, ev.y); if (n) { const [x, y] = toGraph(ev.x, ev.y); n._ox = n.x - x; n._oy = n.y - y; } return n; })
+    .on("start", ev => { if (!ev.active) sim.alphaTarget(0.25).restart(); ev.subject.fx = ev.subject.x; ev.subject.fy = ev.subject.y; ev.subject._moved = false; })
+    .on("drag", ev => { const [x, y] = toGraph(ev.x, ev.y); ev.subject.fx = x + ev.subject._ox; ev.subject.fy = y + ev.subject._oy; ev.subject._moved = true; })
+    .on("end", ev => { if (!ev.active) sim.alphaTarget(0); if (!ev.subject._moved) { ev.subject.fx = null; ev.subject.fy = null; } draw(); }))
+  .call(zoom);
+canvas.addEventListener("click", ev => {
+  const n = nodeAt(ev.offsetX, ev.offsetY);
+  if (!n) { if (state.mode === "graph") select(null); return; }
+  if (n.type === "Community") { drillInto(n.community); return; }
+  if (state.mode === "path") { pickForPath(n.id); return; }
+  select(n.id);
+});
+canvas.addEventListener("dblclick", ev => { const n = nodeAt(ev.offsetX, ev.offsetY); if (n) { n.fx = null; n.fy = null; sim.alpha(0.3).restart(); } });
+const tip = document.getElementById("tooltip");
+canvas.addEventListener("mousemove", ev => {
+  const n = nodeAt(ev.offsetX, ev.offsetY);
+  const id = n ? n.id : null;
+  canvas.style.cursor = n ? "pointer" : "default";
+  if (id !== state.hover) { state.hover = n && n.type !== "Community" ? id : null; draw(); }
+  if (n) { tip.style.display = "block"; tip.style.left = (ev.offsetX + 14) + "px"; tip.style.top = (ev.offsetY + 10) + "px";
+    tip.textContent = n.type === "Community" ? `${n.canonical_name} (${n.size} nodes) · click to open` : `${n.canonical_name} · ${n.type}${n.unresolved ? " · unresolved" : ""}`; }
+  else tip.style.display = "none";
+});
+canvas.addEventListener("mouseleave", () => { tip.style.display = "none"; state.hover = null; draw(); });
+
+// ------------------------------------------------------------------ panel rendering
+const panel = document.getElementById("panel");
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+function docLabel(h) {
+  const d = docByHash.get(h); if (!d) return h.slice(0, 12);
+  const who = (d.authors || []).map(a => a.split(" ").slice(-1)[0]).slice(0, 2).join(", ");
+  return `${esc(d.title)}${who || d.year ? ` (${esc(who)} ${d.year || ""})` : ""}`;
+}
+function srcLink(p) {
+  const d = docByHash.get(p.doc);
+  if (SERVED) return `/source/${p.doc}?line=${p.line || 1}#L${p.line || 1}`;
+  return d ? `../${d.md_path}` : "#";
+}
+function quoteHTML(p) {
+  return `<blockquote>“${esc(p.quote)}”<span class="src">— ${docLabel(p.doc)}${p.page ? ", p. " + esc(p.page) : ""} · <a href="${srcLink(p)}" target="_blank" rel="noopener">line ${p.line || "?"}</a>${p.match === "fuzzy" ? " · fuzzy match" : ""}</span></blockquote>`;
+}
+function select(id) {
+  state.selected = id; state.path = null;
+  if (!id) { panel.innerHTML = `<p class="empty">Click a node to see its type, names, typed edges and the quotes that support them.</p>`; draw(); return; }
+  const n = byId.get(id);
+  const vis = nodeVisible(n);
+  let h = `<span class="badge">${esc(n.type)}</span><span class="badge">C${n.community}</span>${n.unresolved ? '<span class="badge warn">unresolved</span>' : ""}${vis ? "" : '<span class="badge warn">hidden by filters</span>'}`;
+  h += `<div class="name">${esc(n.canonical_name)}</div><div class="id">${esc(n.id)} · ${esc(n.resolution || "")}</div>`;
+  if (n.aliases && n.aliases.length) h += `<div class="aliases"><b>Aliases:</b> ${n.aliases.map(esc).join(" · ")}</div>`;
+  const a = n.attrs || {};
+  if (n.type === "Document") h += `<div class="aliases">${esc((a.authors || []).join(", "))} ${a.year || ""}. ${esc(a.venue || "")}<br><a href="${SERVED ? "/source/" + a.hash : "../" + a.md_path}" target="_blank">open Markdown</a> · <span class="id">${esc(a.source_path)}</span></div>`;
+  if (n.type === "Scholar" && a.years && a.years.length) h += `<div class="aliases">Years cited: ${a.years.join(", ")}</div>`;
+  if (n.type === "PrimaryText" && a.work) h += `<div class="aliases">Work: ${esc(a.work_display)}${a.ancient_author ? " · " + esc(a.ancient_author) : ""}</div>`;
+  if (a.pending_merges) h += `<div class="aliases">Pending merge proposals: ${a.pending_merges.map(esc).join(", ")} (<code>corpus-graph merges list</code>)</div>`;
+  const groups = d3.group(adj.get(id), l => (l.s === id ? "→ " : "← ") + l.relation);
+  [...groups].sort((x, y) => d3.ascending(x[0].includes("cites") || x[0].includes("discusses"), y[0].includes("cites") || y[0].includes("discusses")) || d3.ascending(x[0], y[0]))
+    .forEach(([rel, ls]) => {
+      h += `<details ${ls.length <= 8 ? "open" : ""}><summary>${esc(rel)} <span class="count">${ls.length}</span></summary>`;
+      ls.sort((x, y) => y.provenance.length - x.provenance.length).forEach((l, i) => {
+        const other = byId.get(l.s === id ? l.t : l.s);
+        h += `<div class="edge"><span class="lnk" data-id="${esc(other.id)}">${esc(other.canonical_name)}</span> <span class="meta">${esc(other.type)} · ${l.confidence}${l.derived ? " · derived" : ""} · ${l.provenance.length} quote(s)</span>`;
+        h += `<details><summary class="meta">quotes</summary>${rankProv(l).slice(0, 6).map(quoteHTML).join("")}</details></div>`;
+      });
+      h += `</details>`;
+    });
+  if (n.provenance && n.provenance.length) {
+    h += `<details open><summary>Mentions <span class="count">${n.provenance.length}</span></summary>${n.provenance.slice(0, 30).map(quoteHTML).join("")}</details>`;
+  }
+  panel.innerHTML = h; bindLinks(); openRight(); draw();
+}
+function bindLinks() { panel.querySelectorAll(".lnk").forEach(el => el.onclick = () => { focusNode(el.dataset.id); }); }
+function focusNode(id) {
+  const n = byId.get(id); if (!n) return;
+  if (state.communityView && state.drill === null) drillInto(n.community, false);
+  select(id);
+  if (n.x != null) {
+    const t = d3.zoomIdentity.translate(-n.x * Math.max(transform.k, 1.4), -n.y * Math.max(transform.k, 1.4)).scale(Math.max(transform.k, 1.4));
+    d3.select(canvas).transition().duration(500).call(zoom.transform, t);
+  }
+}
+
+// ------------------------------------------------------------------ modes
+function setMode(m) {
+  state.mode = state.mode === m ? "graph" : m;
+  document.getElementById("modePath").classList.toggle("on", state.mode === "path");
+  document.getElementById("modeDocs").classList.toggle("on", state.mode === "docs");
+  state.pathPick = []; state.path = null;
+  if (state.mode === "path") { panel.innerHTML = `<h2>Path mode</h2><p>Pick the <b>start</b> node (click it or use search).</p><label class="row"><input type="checkbox" id="pathDocs"> allow paths through documents</label>`; openRight(); }
+  else if (state.mode === "docs") renderDocs();
+  else select(state.selected);
+  draw();
+}
+function pickForPath(id) {
+  state.pathPick.push(id);
+  const allowDocs = (document.getElementById("pathDocs") || {}).checked;
+  if (state.pathPick.length === 1) { panel.querySelector("p").innerHTML = `Start: <b>${esc(byId.get(id).canonical_name)}</b>. Now pick the <b>end</b> node.`; state.selected = id; draw(); return; }
+  const [a, b] = state.pathPick; state.pathPick = [];
+  let p = bfs(a, b, allowDocs); let viaDocs = allowDocs;
+  if (!p && !allowDocs) { p = bfs(a, b, true); viaDocs = true; }
+  if (!p) { panel.innerHTML += `<p class="empty">No path between these nodes in the current view.</p>`; return; }
+  state.path = p; state.selected = null;
+  let h = `<h2>Shortest path</h2><p>${p.nodes.length - 1} hop(s)${viaDocs && !allowDocs ? " (through documents: no entity-only path)" : ""}. Click another two nodes for a new path.</p>`;
+  p.nodes.forEach((nid, i) => {
+    const n = byId.get(nid);
+    h += `<div class="pathstep"><span class="lnk edge" data-id="${esc(nid)}" style="color:var(--accent);cursor:pointer">${esc(n.canonical_name)}</span> <span class="badge">${esc(n.type)}</span>`;
+    if (i < p.links.length) { const l = p.links[i]; const fwd = l.s === nid; h += `<div class="meta">${fwd ? "—" + esc(l.relation) + "→" : "←" + esc(l.relation) + "—"}</div>${rankProv(l).slice(0, 1).map(quoteHTML).join("")}`; }
+    h += `</div>`;
+  });
+  panel.innerHTML = h + `<label class="row"><input type="checkbox" id="pathDocs" ${allowDocs ? "checked" : ""}> allow paths through documents</label>`;
+  bindLinks(); draw();
+}
+function bfs(a, b, allowDocs) {
+  const vis = new Set(vNodes.map(n => n.id)); vis.add(a); vis.add(b);
+  const prev = new Map([[a, null]]); const q = [a];
+  while (q.length) {
+    const u = q.shift(); if (u === b) break;
+    for (const l of adj.get(u)) {
+      if (!state.rels.has(l.relation)) continue;
+      const v = l.s === u ? l.t : l.s;
+      if (prev.has(v) || !vis.has(v)) continue;
+      if (!allowDocs && byId.get(v).type === "Document" && v !== b) continue;
+      prev.set(v, [u, l]); q.push(v);
+    }
+  }
+  if (!prev.has(b)) return null;
+  const ns = [], ls = []; let cur = b;
+  while (cur !== null) { ns.push(cur); const p = prev.get(cur); if (p) { ls.push(p[1]); cur = p[0]; } else cur = null; }
+  ns.reverse(); ls.reverse(); return {nodes: ns, links: ls};
+}
+function renderDocs() {
+  let h = `<h2>Documents (${G.documents.length})</h2>`;
+  [...G.documents].sort((a, b) => (a.year || 0) - (b.year || 0)).forEach(d => {
+    const ns = nodes.filter(n => n.type !== "Document" && n.docset.has(d.hash.slice(0, 12)));
+    const counts = d3.rollup(ns, v => v.length, n => n.type);
+    h += `<div class="doc" data-h="${d.hash.slice(0, 12)}"><div class="t">${esc(d.title)}</div><div class="m">${esc((d.authors || []).join(", "))} ${d.year || ""} · ${esc(d.venue || "")}</div><div class="m">${[...counts].map(([t, c]) => `${c} ${t}`).join(" · ")}</div></div>`;
+  });
+  panel.innerHTML = h; openRight();
+  panel.querySelectorAll(".doc").forEach(el => el.onclick = () => showDoc(el.dataset.h));
+}
+function showDoc(h12) {
+  const d = docByShort.get(h12);
+  state.docs = new Set([h12]);
+  const ds = document.getElementById("docsel"); [...ds.options].forEach(o => o.selected = o.value === h12);
+  refresh();
+  const ns = nodes.filter(n => n.type !== "Document" && n.docset.has(h12));
+  let h = `<p><span class="lnk" id="backDocs" style="color:var(--accent);cursor:pointer">← all documents</span></p><div class="name">${esc(d.title)}</div><div class="aliases">${esc((d.authors || []).join(", "))} ${d.year || ""}. ${esc(d.venue || "")} · <a href="${SERVED ? "/source/" + d.hash : "../" + d.md_path}" target="_blank">Markdown</a></div>`;
+  d3.groups(ns, n => n.type).sort((a, b) => d3.ascending(a[0], b[0])).forEach(([t, list]) => {
+    h += `<details open><summary>${esc(t)} <span class="count">${list.length}</span></summary>`;
+    list.sort((a, b) => d3.ascending(a.canonical_name, b.canonical_name)).forEach(n => h += `<div class="edge"><span class="lnk" data-id="${esc(n.id)}">${esc(n.canonical_name)}</span>${n.unresolved ? ' <span class="badge warn">unresolved</span>' : ""}</div>`);
+    h += `</details>`;
+  });
+  panel.innerHTML = h; bindLinks();
+  document.getElementById("backDocs").onclick = () => { document.getElementById("docClear").click(); renderDocs(); };
+}
+function drillInto(c, animate = true) {
+  state.drill = c; state.forceCommunities = false;
+  document.getElementById("crumb").style.display = "flex";
+  const meta = G.communities.find(x => x.id === c);
+  document.getElementById("crumbLabel").textContent = `C${c} · ${meta ? (meta.llm_label || meta.label) : ""}`;
+  refresh();
+  fitPending = true;
+}
+document.getElementById("crumbBack").onclick = () => { state.drill = null; document.getElementById("crumb").style.display = "none"; refresh(); };
+document.getElementById("modePath").onclick = () => setMode("path");
+document.getElementById("modeDocs").onclick = () => setMode("docs");
+document.getElementById("modeComm").onclick = () => {
+  state.forceCommunities = !state.forceCommunities; state.drill = null;
+  document.getElementById("crumb").style.display = "none";
+  document.getElementById("modeComm").classList.toggle("on", state.forceCommunities); refresh();
+};
+document.getElementById("reset").onclick = () => {
+  nodes.forEach(n => { n.fx = null; n.fy = null; });
+  state.path = null; state.selected = null; state.drill = null; state.forceCommunities = false;
+  document.getElementById("crumb").style.display = "none"; document.getElementById("modeComm").classList.remove("on");
+  select(null); restart(1);
+};
+function openRight() { document.getElementById("right").classList.add("open"); }
+document.getElementById("toggleLeft").onclick = () => document.getElementById("left").classList.toggle("open");
+document.getElementById("toggleRight").onclick = () => document.getElementById("right").classList.toggle("open");
+
+// ------------------------------------------------------------------ search
+const sIndex = [];
+nodes.forEach(n => {
+  sIndex.push({key: n.canonical_name.toLowerCase().normalize("NFD").replace(/\p{M}/gu, ""), label: n.canonical_name, n});
+  (n.aliases || []).forEach(a => sIndex.push({key: a.toLowerCase().normalize("NFD").replace(/\p{M}/gu, ""), label: a, n, alias: true}));
+});
+const sInput = document.getElementById("search"), sBox = document.getElementById("suggest");
+let sItems = [], sActive = 0;
+sInput.addEventListener("input", () => {
+  const q = sInput.value.trim().toLowerCase().normalize("NFD").replace(/\p{M}/gu, "");
+  if (!q) { sBox.style.display = "none"; return; }
+  const seen = new Set();
+  sItems = sIndex.filter(x => x.key.includes(q)).sort((a, b) => (b.key.startsWith(q) - a.key.startsWith(q)) || (a.alias - b.alias) || ((b.n.degree || 0) - (a.n.degree || 0)))
+    .filter(x => !seen.has(x.n.id) && seen.add(x.n.id)).slice(0, 14);
+  sActive = 0; renderSuggest();
+});
+function renderSuggest() {
+  if (!sItems.length) { sBox.style.display = "none"; return; }
+  sBox.innerHTML = sItems.map((x, i) => `<div class="${i === sActive ? "active" : ""}" data-i="${i}">${shapeIcon(shapes[x.n.type], commColor(x.n.community)).outerHTML}<span>${esc(x.label)}</span>${x.alias ? `<small>→ ${esc(x.n.canonical_name)}</small>` : ""}<small>${esc(x.n.type)}</small></div>`).join("");
+  sBox.style.display = "block";
+  sBox.querySelectorAll("div").forEach(el => el.onmousedown = ev => { ev.preventDefault(); choose(+el.dataset.i); });
+}
+function choose(i) {
+  const x = sItems[i]; if (!x) return;
+  sBox.style.display = "none"; sInput.value = x.n.canonical_name;
+  if (state.mode === "path") pickForPath(x.n.id); else focusNode(x.n.id);
+}
+sInput.addEventListener("keydown", ev => {
+  if (ev.key === "ArrowDown") { sActive = Math.min(sActive + 1, sItems.length - 1); renderSuggest(); ev.preventDefault(); }
+  else if (ev.key === "ArrowUp") { sActive = Math.max(sActive - 1, 0); renderSuggest(); ev.preventDefault(); }
+  else if (ev.key === "Enter") { choose(sActive); }
+  else if (ev.key === "Escape") { sBox.style.display = "none"; }
+});
+sInput.addEventListener("blur", () => setTimeout(() => sBox.style.display = "none", 150));
+
+// ------------------------------------------------------------------ boot
+function updateStats() {
+  const m = G.meta.counts;
+  document.getElementById("stats").textContent = state.communityView
+    ? `${cNodes.length} communities shown (${vNodes.length} nodes; > ${COMMUNITY_THRESHOLD} collapses to communities, click one to drill down)`
+    : `${vNodes.length}/${m.nodes} nodes · ${vLinks.length}/${m.edges} edges · ${m.documents} documents`;
+}
+function refresh() { restart(0.5); fitPending = true; if (state.selected) select(state.selected); }
+window.addEventListener("resize", resize);
+window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => { readColors(); draw(); });
+readColors(); buildFilters(); resize(); restart(1);
+</script>
+</body>
+</html>

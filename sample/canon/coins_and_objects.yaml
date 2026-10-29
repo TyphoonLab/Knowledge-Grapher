@@ -1,0 +1,14 @@
+# Coins, inscriptions, papyri, ostraca and artifacts.
+# Add the original-language forms as aliases (Greek and Hebrew in their own script).
+- {name: denarius, aliases: [denarii, Denar, denier, denaro, δηνάριον, δηνάρια, דינר, dinar]}
+- {name: drachma, aliases: [drachmae, drachmas, Drachme, drachme, dracma, δραχμή, δραχμαί]}
+- {name: as, aliases: [asses, assarion, ἀσσάριον, Ass]}
+- {name: quadrans, aliases: [quadrantes, κοδράντης, Quadrant]}
+- {name: lepton, aliases: [lepta, λεπτόν, λεπτά, Lepton (coin), prutah, פרוטה]}
+- {name: sestertius, aliases: [sesterces, sestertii, Sesterz, sesterce, sesterzio, HS]}
+- {name: talent, aliases: [talents, Talent, talento, τάλαντον, τάλαντα, כיכר]}
+- {name: mina, aliases: [minas, Mine, μνᾶ, מנה]}
+- {name: stater, aliases: [staters, στατήρ, Stater]}
+- {name: shekel, aliases: [shekels, Schekel, sicle, siclo, שקל, Tyrian shekel]}
+- {name: obol, aliases: [obols, Obolus, obole, obolo, ὀβολός]}
+- {name: didrachm, aliases: [didrachma, δίδραχμον, Doppeldrachme]}

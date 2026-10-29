@@ -1,0 +1,80 @@
+# Classical, Jewish and early Christian works known to the locus parser.
+#
+# key      internal id used in node ids (pt:tac-ann.1.17)
+# display  canonical name prefix ("Tacitus, Annals 1.17")
+# author   AncientAuthor canonical name (null for anonymous/collective works)
+# abbr     abbreviations and titles as they appear in EN/DE/FR/IT scholarship.
+#          Matching ignores case, full stops and spacing, so "Tac. Ann." also
+#          matches "Tac Ann" and "tac. ann.".
+#
+# Extend this table without touching code by adding a `works:` list to
+# canon/primary_texts.yaml with the same fields.
+
+# ---------------------------------------------------------------- Greek historians
+- {key: hdt, display: "Herodotus, Histories", author: Herodotus, abbr: ["Hdt.", "Herod.", "Herodotus", "Hérodote", "Erodoto", "Herodot"]}
+- {key: thuc, display: "Thucydides, History", author: Thucydides, abbr: ["Thuc.", "Thucydides", "Thukydides", "Thucydide", "Tucidide"]}
+- {key: xen-oec, display: "Xenophon, Oeconomicus", author: Xenophon, abbr: ["Xen. Oec.", "Xenophon, Oeconomicus", "Xen. Oik."]}
+- {key: xen-an, display: "Xenophon, Anabasis", author: Xenophon, abbr: ["Xen. An.", "Xen. Anab.", "Xenophon, Anabasis"]}
+- {key: polyb, display: "Polybius, Histories", author: Polybius, abbr: ["Polyb.", "Plb.", "Polybius", "Polybios", "Polybe", "Polibio"]}
+- {key: diod, display: "Diodorus Siculus, Library", author: Diodorus Siculus, abbr: ["Diod. Sic.", "Diod.", "Diodorus Siculus", "Diodor"]}
+- {key: strabo, display: "Strabo, Geography", author: Strabo, abbr: ["Strabo", "Str.", "Strab.", "Strabon", "Strabone"]}
+- {key: dion-hal-ant, display: "Dionysius of Halicarnassus, Roman Antiquities", author: Dionysius of Halicarnassus, abbr: ["Dion. Hal. Ant. Rom.", "Dion. Hal.", "Dion. Hal. Ant."]}
+- {key: app-bciv, display: "Appian, Civil Wars", author: Appian, abbr: ["App. B Civ.", "App. BCiv.", "App. B.C.", "Appian, Civil Wars", "App. civ."]}
+- {key: dio, display: "Cassius Dio, Roman History", author: Cassius Dio, abbr: ["Cass. Dio", "Dio Cass.", "Dio", "Cassius Dio"]}
+- {key: plut-cat-mai, display: "Plutarch, Cato the Elder", author: Plutarch, abbr: ["Plut. Cat. Mai.", "Plut. Cato Maj.", "Plutarch, Cato Maior"]}
+- {key: plut-mor, display: "Plutarch, Moralia", author: Plutarch, abbr: ["Plut. Mor.", "Plutarch, Moralia"]}
+- {key: arist-pol, display: "Aristotle, Politics", author: Aristotle, abbr: ["Arist. Pol.", "Aristotle, Politics", "Aristot. Pol."]}
+- {key: arist-eth-nic, display: "Aristotle, Nicomachean Ethics", author: Aristotle, abbr: ["Arist. Eth. Nic.", "Arist. EN", "Aristotle, Nicomachean Ethics", "Arist. NE"]}
+# ---------------------------------------------------------------- Latin authors
+- {key: tac-ann, display: "Tacitus, Annals", author: Tacitus, abbr: ["Tac. Ann.", "Tac. ann.", "Tacitus, Annals", "Tacitus, Annales", "Tacite, Annales", "Tacito, Annali", "Tac. Annal."]}
+- {key: tac-hist, display: "Tacitus, Histories", author: Tacitus, abbr: ["Tac. Hist.", "Tac. hist.", "Tacitus, Histories", "Tacitus, Historiae"]}
+- {key: tac-agr, display: "Tacitus, Agricola", author: Tacitus, abbr: ["Tac. Agr.", "Tacitus, Agricola"]}
+- {key: suet-aug, display: "Suetonius, Augustus", author: Suetonius, abbr: ["Suet. Aug.", "Suet. Div. Aug.", "Suetonius, Augustus"]}
+- {key: suet-tib, display: "Suetonius, Tiberius", author: Suetonius, abbr: ["Suet. Tib.", "Suetonius, Tiberius"]}
+- {key: suet-claud, display: "Suetonius, Claudius", author: Suetonius, abbr: ["Suet. Claud.", "Suet. Cl.", "Suetonius, Claudius"]}
+- {key: suet-ner, display: "Suetonius, Nero", author: Suetonius, abbr: ["Suet. Ner.", "Suet. Nero", "Suetonius, Nero"]}
+- {key: suet-dom, display: "Suetonius, Domitian", author: Suetonius, abbr: ["Suet. Dom.", "Suetonius, Domitian"]}
+- {key: plin-hn, display: "Pliny the Elder, Natural History", author: Pliny the Elder, abbr: ["Plin. HN", "Plin. NH", "Plin. Nat.", "Plin. nat. hist.", "Plin. n.h.", "Pliny, Natural History", "Pliny, NH", "Pliny, HN", "Plinius, Naturalis historia", "Plin. nat.", "Pline, Histoire naturelle", "Plinio, Naturalis historia"]}
+- {key: plin-ep, display: "Pliny the Younger, Letters", author: Pliny the Younger, abbr: ["Plin. Ep.", "Plin. ep.", "Plin. Epist.", "Pliny, Letters", "Pliny, Ep.", "Plinius, Epistulae"]}
+- {key: cic-off, display: "Cicero, On Duties", author: Cicero, abbr: ["Cic. Off.", "Cic. off.", "Cicero, De officiis", "Cicero, Off."]}
+- {key: cic-verr, display: "Cicero, Against Verres", author: Cicero, abbr: ["Cic. Verr.", "Cicero, In Verrem", "Cic. Ver."]}
+- {key: cic-att, display: "Cicero, Letters to Atticus", author: Cicero, abbr: ["Cic. Att.", "Cicero, Ad Atticum"]}
+- {key: cato-agr, display: "Cato, On Agriculture", author: Cato the Elder, abbr: ["Cato Agr.", "Cato, Agr.", "Cato, De agricultura", "Cato, De agri cultura", "Cato, Agr"]}
+- {key: varro-rust, display: "Varro, On Agriculture", author: Varro, abbr: ["Varro Rust.", "Varro, Rust.", "Varro, Res rusticae", "Varro, R.R.", "Varro, Rer. rust."]}
+- {key: colum-rust, display: "Columella, On Agriculture", author: Columella, abbr: ["Colum. Rust.", "Columella, Rust.", "Columella, De re rustica", "Col. Rust.", "Columella"]}
+- {key: petron-sat, display: "Petronius, Satyricon", author: Petronius, abbr: ["Petron. Sat.", "Petr. Sat.", "Petronius, Satyricon", "Petron."]}
+- {key: juv, display: "Juvenal, Satires", author: Juvenal, abbr: ["Juv.", "Iuv.", "Juvenal", "Juvénal", "Giovenale"]}
+- {key: mart, display: "Martial, Epigrams", author: Martial, abbr: ["Mart.", "Martial", "Martialis", "Marziale"]}
+- {key: sen-ep, display: "Seneca, Moral Epistles", author: Seneca the Younger, abbr: ["Sen. Ep.", "Sen. Epist.", "Seneca, Ep.", "Seneca, Epistulae morales"]}
+- {key: liv, display: "Livy, History of Rome", author: Livy, abbr: ["Livy", "Liv.", "Livius", "Tite-Live", "Livio"]}
+- {key: hor-sat, display: "Horace, Satires", author: Horace, abbr: ["Hor. Sat.", "Hor. sat.", "Horace, Satires"]}
+- {key: dig, display: "Digest", author: null, abbr: ["Dig.", "D.", "Digest", "Digesta"]}
+- {key: gai-inst, display: "Gaius, Institutes", author: Gaius, abbr: ["Gai. Inst.", "Gaius, Inst.", "Gaius, Institutiones"]}
+- {key: ed-diocl, display: "Edict of Diocletian on Maximum Prices", author: null, abbr: ["Ed. Diocl.", "Edict. Diocl.", "Diocletian's Price Edict", "Edictum de pretiis", "Ed. de pret.", "Price Edict"]}
+- {key: res-gest, display: "Res Gestae Divi Augusti", author: Augustus, abbr: ["RG", "Res Gestae", "Res gest.", "Mon. Anc."]}
+# ---------------------------------------------------------------- Jewish literature
+- {key: jos-ant, display: "Josephus, Jewish Antiquities", author: Josephus, abbr: ["Joseph. AJ", "Jos. Ant.", "Josephus, Ant.", "Josephus, Antiquities", "Ant.", "A.J.", "AJ", "Flav. Jos. Ant."]}
+- {key: jos-bj, display: "Josephus, Jewish War", author: Josephus, abbr: ["Joseph. BJ", "Jos. Bell.", "Jos. B.J.", "Josephus, J.W.", "Josephus, War", "J.W.", "B.J.", "BJ", "Bell.", "Josephus, Bell."]}
+- {key: jos-vita, display: "Josephus, Life", author: Josephus, abbr: ["Jos. Vita", "Josephus, Life", "Josephus, Vita", "Vita"]}
+- {key: jos-cap, display: "Josephus, Against Apion", author: Josephus, abbr: ["Jos. Ap.", "Josephus, Ag. Ap.", "C. Ap.", "Ag. Ap.", "Josephus, Contra Apionem"]}
+- {key: philo-legat, display: "Philo, Embassy to Gaius", author: Philo of Alexandria, abbr: ["Philo, Legat.", "Philo Legat.", "Philo, Embassy", "Legat."]}
+- {key: philo-flacc, display: "Philo, Against Flaccus", author: Philo of Alexandria, abbr: ["Philo, Flacc.", "Philo Flacc.", "Flacc."]}
+- {key: philo-spec, display: "Philo, On the Special Laws", author: Philo of Alexandria, abbr: ["Philo, Spec.", "Philo Spec. Leg.", "Philo, Spec. Laws", "Spec. Laws"]}
+- {key: m-bm, sep: ":", display: "Mishnah Bava Metzi'a", author: null, abbr: ["m. B. Meṣ.", "m. B. Mes.", "m. BM", "m. Bava Metzia", "mBM", "M. B.M."]}
+- {key: m-bb, sep: ":", display: "Mishnah Bava Batra", author: null, abbr: ["m. B. Bat.", "m. BB", "m. Bava Batra", "mBB"]}
+- {key: m-pea, sep: ":", display: "Mishnah Pe'ah", author: null, abbr: ["m. Pe'ah", "m. Peah", "m. Pea", "mPea"]}
+- {key: m-shab, sep: ":", display: "Mishnah Shabbat", author: null, abbr: ["m. Šabb.", "m. Shabb.", "m. Shab.", "m. Shabbat", "mShab"]}
+- {key: m-sheq, sep: ":", display: "Mishnah Sheqalim", author: null, abbr: ["m. Šeqal.", "m. Sheqal.", "m. Sheq.", "m. Sheqalim", "mSheq"]}
+- {key: b-bm, folio: true, display: "Babylonian Talmud Bava Metzi'a", author: null, abbr: ["b. B. Meṣ.", "b. B. Mes.", "b. BM", "bBM"]}
+- {key: 1qs, display: "Community Rule (1QS)", author: null, abbr: ["1QS"]}
+- {key: cd, display: "Damascus Document (CD)", author: null, abbr: ["CD"]}
+- {key: pss-sol, display: "Psalms of Solomon", author: null, abbr: ["Pss. Sol.", "PsSal", "Ps. Sol."]}
+- {key: 1en, display: "1 Enoch", author: null, abbr: ["1 En.", "1 Enoch", "äthHen", "1Hen"]}
+# ---------------------------------------------------------------- Early Christian
+- {key: did, display: "Didache", author: null, abbr: ["Did.", "Didache"]}
+- {key: 1clem, display: "1 Clement", author: Clement of Rome, abbr: ["1 Clem.", "1 Clement", "1Clem"]}
+- {key: herm-sim, display: "Shepherd of Hermas, Similitudes", author: null, abbr: ["Herm. Sim.", "Herm. Simil.", "Hermas, Sim."]}
+- {key: gos-thom, display: "Gospel of Thomas", author: null, abbr: ["Gos. Thom.", "EvThom", "Ev. Thom.", "GThom", "Gospel of Thomas", "Thomas"]}
+- {key: eus-he, display: "Eusebius, Ecclesiastical History", author: Eusebius, abbr: ["Eus. Hist. eccl.", "Euseb. Hist. eccl.", "Eusebius, Hist. eccl.", "Eus. HE", "Eusebius, HE", "Hist. eccl.", "h.e."]}
+- {key: just-1apol, display: "Justin Martyr, First Apology", author: Justin Martyr, abbr: ["Just. 1 Apol.", "Justin, 1 Apol.", "Justin, First Apology", "1 Apol."]}
+- {key: clem-quis, display: "Clement of Alexandria, Who Is the Rich Man That Shall Be Saved?", author: Clement of Alexandria, abbr: ["Clem. Al. Quis div.", "Quis div.", "Clement, Quis dives salvetur"]}

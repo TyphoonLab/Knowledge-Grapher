@@ -1,0 +1,16 @@
+# Primary texts.
+#
+# passages: named passages and pericopes, mapped to a locus. `name` must be a citation the
+#           parser understands; aliases are the names scholars use for the passage.
+# works:    extra works for the locus parser (same fields as the built-in table:
+#           key, display, author, abbr).
+passages:
+  - {name: "Matt 20:1–16", aliases: [parable of the labourers in the vineyard, parable of the workers in the vineyard, Arbeiter im Weinberg, ouvriers de la onzième heure, operai della vigna]}
+  - {name: "Matt 25:14–30", aliases: [parable of the talents, Gleichnis von den anvertrauten Talenten, parabole des talents, parabola dei talenti]}
+  - {name: "Luke 19:11–27", aliases: [parable of the pounds, parable of the minas]}
+  - {name: "Luke 15:8–10", aliases: [parable of the lost coin, parable of the lost drachma, verlorene Drachme, drachme perdue, dramma perduta]}
+  - {name: "Mark 12:41–44", aliases: [widow's mite, the widow's offering, Scherflein der Witwe, l'obole de la veuve, l'obolo della vedova]}
+  - {name: "Mark 12:13–17", aliases: [tribute to Caesar, the tribute coin, Zinsgroschen, le tribut à César, il tributo a Cesare]}
+  - {name: "Mark 6:30–44", aliases: [feeding of the five thousand, Speisung der Fünftausend, multiplication des pains]}
+  - {name: "Matt 18:23–35", aliases: [parable of the unforgiving servant, parable of the unmerciful servant, Schalksknecht]}
+works: []

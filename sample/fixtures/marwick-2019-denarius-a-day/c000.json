@@ -1,0 +1,338 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 2712,
+    "cache_read": 0,
+    "cache_write": 5875,
+    "cost_usd": 0.050624
+  },
+  "data": {
+    "document_meta": {
+      "title": "A Denarius a Day: Wage Rhetoric and Subsistence in Matthew 20:1–16",
+      "authors": [
+        "Helena Marwick"
+      ],
+      "year": 2019,
+      "venue": "Journal for the Study of Ancient Economies 12"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Helena Marwick",
+        "aliases": [],
+        "quote": "_Helena Marwick, University of Northbridge_",
+        "surname": "Marwick",
+        "given_names": "Helena",
+        "cited_years": [],
+        "is_document_author": true,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "Okafor",
+        "aliases": [],
+        "quote": "for a critical survey see Okafor 2015, 12–19.",
+        "surname": "Okafor",
+        "given_names": null,
+        "cited_years": [
+          2015
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "PrimaryText",
+        "name": "Matt 20:2",
+        "aliases": [],
+        "quote": "agreed with the labourers for a denarius for the day\" (Matt 20:2;",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 20:2",
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "PrimaryText",
+        "name": "Mark 6:37",
+        "aliases": [],
+        "quote": "the two hundred denarii of Mark 6:37",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mark 6:37",
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "PrimaryText",
+        "name": "Matt 18:28",
+        "aliases": [],
+        "quote": "the hundred denarii owed by the fellow servant in Matt 18:28",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 18:28",
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "PrimaryText",
+        "name": "Matt 18:24",
+        "aliases": [],
+        "quote": "the ten thousand talents of Matt 18:24",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 18:24",
+        "note": null
+      },
+      {
+        "id": "n7",
+        "type": "PrimaryText",
+        "name": "Matt 20:1–16",
+        "aliases": [],
+        "quote": "The parable of the labourers in the vineyard (Matt 20:1–16)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Matt 20:1–16",
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [
+          "δηνάριον"
+        ],
+        "quote": "ἐκ δηναρίου τὴν ἡμέραν",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "Object",
+        "name": "talent",
+        "aliases": [],
+        "quote": "the ten thousand talents of Matt 18:24",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "Concept",
+        "name": "subsistence wage",
+        "aliases": [],
+        "quote": "reflects the subsistence wage of an unskilled labourer in early Roman Galilee",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n11",
+        "type": "Place",
+        "name": "Galilee",
+        "aliases": [],
+        "quote": "early Roman Galilee",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n12",
+        "type": "Argument",
+        "name": "the denarius was a day's wage for an unskilled labourer",
+        "aliases": [],
+        "quote": "If a denarius was a day's wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n13",
+        "type": "Concept",
+        "name": "daily wage",
+        "aliases": [],
+        "quote": "treated this sum as the standard daily wage",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "_Helena Marwick, University of Northbridge_",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n3",
+        "relation": "cites",
+        "quote": "agreed with the labourers for a denarius for the day\" (Matt 20:2;",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n4",
+        "relation": "cites",
+        "quote": "the two hundred denarii of Mark 6:37",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "the hundred denarii owed by the fellow servant in Matt 18:28",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n6",
+        "relation": "cites",
+        "quote": "the ten thousand talents of Matt 18:24",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n7",
+        "relation": "cites",
+        "quote": "The parable of the labourers in the vineyard (Matt 20:1–16)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n8",
+        "relation": "discusses",
+        "quote": "a single denarius is a recognisable day's pay",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n10",
+        "relation": "discusses",
+        "quote": "reflects the subsistence wage of an unskilled labourer in early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n11",
+        "relation": "discusses",
+        "quote": "early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n12",
+        "relation": "advances",
+        "quote": "it holds, with qualifications, for the rural economy of early Roman Galilee",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n1",
+        "target": "n12",
+        "relation": "argues",
+        "quote": "it holds, with qualifications, for the rural economy of early Roman Galilee",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n12",
+        "target": "n3",
+        "relation": "grounded_in",
+        "quote": "agreed with the labourers for a denarius for the day\" (Matt 20:2;",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n8",
+        "relation": "about",
+        "quote": "a single denarius is a recognisable day's pay",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n11",
+        "relation": "about",
+        "quote": "early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n10",
+        "relation": "about",
+        "quote": "reflects the subsistence wage of an unskilled labourer in early Roman Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n8",
+        "target": "n3",
+        "relation": "attested_in",
+        "quote": "agreed with the labourers for a denarius for the day\" (Matt 20:2;",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n8",
+        "target": "n4",
+        "relation": "attested_in",
+        "quote": "the two hundred denarii of Mark 6:37",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n8",
+        "target": "n5",
+        "relation": "attested_in",
+        "quote": "the hundred denarii owed by the fellow servant in Matt 18:28",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n9",
+        "target": "n6",
+        "relation": "attested_in",
+        "quote": "the ten thousand talents of Matt 18:24",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n2",
+        "relation": "discusses",
+        "quote": "for a critical survey see Okafor 2015, 12–19.",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}

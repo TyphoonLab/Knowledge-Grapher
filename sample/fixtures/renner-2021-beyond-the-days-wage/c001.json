@@ -1,0 +1,371 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 3023,
+    "cache_read": 3557,
+    "cache_write": 2121,
+    "cost_usd": 0.0390737
+  },
+  "data": {
+    "document_meta": {
+      "title": "Beyond the 'Day's Wage': Denarii, Rations and the Problem of Equivalence",
+      "authors": [
+        "Tobias Renner"
+      ],
+      "year": 2021,
+      "venue": "Journal for the Study of Ancient Economies 14"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Tobias Renner",
+        "aliases": [],
+        "quote": "The denarius of Mt 20,2 is a narrative convention rather than an attested wage.",
+        "surname": "Renner",
+        "given_names": "Tobias",
+        "cited_years": [],
+        "is_document_author": true,
+        "citation": null,
+        "note": "Author from document header; inferred as author of the claims."
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "Holt",
+        "aliases": [],
+        "quote": "Holt 2004, 115–131, with the hoard tables at 140–152.",
+        "surname": "Holt",
+        "given_names": null,
+        "cited_years": [
+          2004
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "PrimaryText",
+        "name": "m. B. Meṣ. 7:1",
+        "aliases": [],
+        "quote": "The rabbinic regulations in m. B. Meṣ. 7:1",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "m. B. Meṣ. 7:1",
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "PrimaryText",
+        "name": "Mk 12,15",
+        "aliases": [],
+        "quote": "The tribute coin of Mk 12,15 is telling here",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mk 12,15",
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "PrimaryText",
+        "name": "Mt 20,2",
+        "aliases": [],
+        "quote": "The denarius of Mt 20,2 is a narrative convention",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 20,2",
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "Object",
+        "name": "O.Sepph. 4",
+        "aliases": [],
+        "quote": "An unpublished ostracon from Sepphoris (O.Sepph. 4)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": "Footnote says the text is fictional for the sample."
+      },
+      {
+        "id": "n7",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [],
+        "quote": "silver denarii were scarce in rural circulation",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "Place",
+        "name": "Sepphoris",
+        "aliases": [],
+        "quote": "An unpublished ostracon from Sepphoris",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "Place",
+        "name": "Lower Galilee",
+        "aliases": [],
+        "quote": "Hoard evidence from Lower Galilee",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "Concept",
+        "name": "wages in kind",
+        "aliases": [],
+        "quote": "a substantial part of the wage was paid in food",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n11",
+        "type": "Argument",
+        "name": "the denarius in Mt 20,2 is a narrative convention, not an attested wage",
+        "aliases": [],
+        "quote": "The denarius of Mt 20,2 is a narrative convention rather than an attested wage.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n12",
+        "type": "Argument",
+        "name": "rural wages were commonly paid partly in kind rather than in silver",
+        "aliases": [],
+        "quote": "a substantial part of the wage was paid in food",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n13",
+        "type": "Argument",
+        "name": "silver denarii were scarce in rural Galilean circulation before the second century",
+        "aliases": [],
+        "quote": "silver denarii were scarce in rural circulation before the second century",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "The denarius of Mt 20,2 is a narrative convention rather than an attested wage.",
+        "confidence": "inferred"
+      },
+      {
+        "source": "DOC",
+        "target": "n3",
+        "relation": "cites",
+        "quote": "The rabbinic regulations in m. B. Meṣ. 7:1",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n4",
+        "relation": "cites",
+        "quote": "The tribute coin of Mk 12,15 is telling here",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "The denarius of Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n6",
+        "relation": "discusses",
+        "quote": "An unpublished ostracon from Sepphoris (O.Sepph. 4)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n7",
+        "relation": "discusses",
+        "quote": "The denarius was the coin of imperial taxation, not of the village market.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n9",
+        "relation": "discusses",
+        "quote": "Hoard evidence from Lower Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n10",
+        "relation": "discusses",
+        "quote": "a substantial part of the wage was paid in food",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n11",
+        "relation": "advances",
+        "quote": "The denarius of Mt 20,2 is a narrative convention rather than an attested wage.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n12",
+        "relation": "advances",
+        "quote": "a substantial part of the wage was paid in food",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n13",
+        "relation": "advances",
+        "quote": "silver denarii were scarce in rural circulation before the second century",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n11",
+        "relation": "argues",
+        "quote": "The denarius of Mt 20,2 is a narrative convention rather than an attested wage.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n12",
+        "relation": "argues",
+        "quote": "a substantial part of the wage was paid in food",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n13",
+        "relation": "argues",
+        "quote": "silver denarii were scarce in rural circulation before the second century",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n2",
+        "relation": "builds_on",
+        "quote": "Holt 2004, 115–131, with the hoard tables at 140–152.",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n11",
+        "target": "n5",
+        "relation": "grounded_in",
+        "quote": "The denarius of Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n3",
+        "relation": "grounded_in",
+        "quote": "they point away from the cash model",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n6",
+        "relation": "grounded_in",
+        "quote": "recording payments to field hands partly in grain and partly in bronze, fits this picture",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n12",
+        "target": "n10",
+        "relation": "about",
+        "quote": "a substantial part of the wage was paid in food",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n13",
+        "target": "n7",
+        "relation": "about",
+        "quote": "silver denarii were scarce in rural circulation",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n13",
+        "target": "n9",
+        "relation": "about",
+        "quote": "Hoard evidence from Lower Galilee",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n13",
+        "target": "n4",
+        "relation": "grounded_in",
+        "quote": "The tribute coin of Mk 12,15 is telling here",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n11",
+        "target": "n7",
+        "relation": "about",
+        "quote": "The denarius of Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n7",
+        "target": "n5",
+        "relation": "attested_in",
+        "quote": "The denarius of Mt 20,2",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n7",
+        "target": "n4",
+        "relation": "attested_in",
+        "quote": "Jesus asks for a denarius to be brought",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}

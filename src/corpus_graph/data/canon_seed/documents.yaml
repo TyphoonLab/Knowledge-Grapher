@@ -1,0 +1,4 @@
+# Metadata overrides for source documents, keyed by file name (relative to input/), or SHA256.
+# Values here win over anything extracted.
+# "Smith 2004 - Coins.pdf": {title: "Coins of Galilee", authors: [J. Smith], year: 2004, venue: "JRA 17"}
+{}

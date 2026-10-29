@@ -1,0 +1,35 @@
+[project]
+name = "corpus-graph"
+version = "0.1.0"
+description = "Turn a folder of scholarly documents into a typed, provenance-backed knowledge graph"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pymupdf>=1.24",
+    "pymupdf4llm>=0.0.17",
+    "networkx>=3.2",
+    "pyyaml>=6.0",
+    "rapidfuzz>=3.6",
+    "igraph>=0.11",
+    "leidenalg>=0.10",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.40"]
+marker = ["marker-pdf>=1.0"]
+
+[project.scripts]
+corpus-graph = "corpus_graph.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8", "python-docx>=1.1"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/corpus_graph"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

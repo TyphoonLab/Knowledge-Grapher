@@ -1,0 +1,474 @@
+{
+  "model": "claude-sonnet-5-5",
+  "usage": {
+    "tokens_in": 2,
+    "tokens_out": 3855,
+    "cache_read": 3557,
+    "cache_write": 2545,
+    "cost_usd": 0.0490897
+  },
+  "data": {
+    "document_meta": {
+      "title": "Beyond the 'Day's Wage': Denarii, Rations and the Problem of Equivalence",
+      "authors": [
+        "Tobias Renner"
+      ],
+      "year": 2021,
+      "venue": "Journal for the Study of Ancient Economies 14"
+    },
+    "nodes": [
+      {
+        "id": "n1",
+        "type": "Scholar",
+        "name": "Tobias Renner",
+        "aliases": [],
+        "quote": "_Tobias Renner, Universität Kesselberg_",
+        "surname": "Renner",
+        "given_names": "Tobias",
+        "cited_years": [],
+        "is_document_author": true,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n2",
+        "type": "Scholar",
+        "name": "H. Marwick",
+        "aliases": [
+          "Marwick"
+        ],
+        "quote": "H. Marwick, \"A Denarius a Day,\" JSAE 12 (2019) 101–106, esp. 102.",
+        "surname": "Marwick",
+        "given_names": "H.",
+        "cited_years": [
+          2019
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n3",
+        "type": "Scholar",
+        "name": "Okafor",
+        "aliases": [],
+        "quote": "For the dating see Okafor 2015, 21",
+        "surname": "Okafor",
+        "given_names": null,
+        "cited_years": [
+          2015
+        ],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n4",
+        "type": "PrimaryText",
+        "name": "Mt 20,2",
+        "aliases": [],
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mt 20,2",
+        "note": null
+      },
+      {
+        "id": "n5",
+        "type": "PrimaryText",
+        "name": "Mk 6,37",
+        "aliases": [],
+        "quote": "The two hundred denarii of Mk 6,37",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Mk 6,37",
+        "note": null
+      },
+      {
+        "id": "n6",
+        "type": "PrimaryText",
+        "name": "Offb 6,6",
+        "aliases": [],
+        "quote": "the famine price of Offb 6,6",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Offb 6,6",
+        "note": null
+      },
+      {
+        "id": "n7",
+        "type": "PrimaryText",
+        "name": "Tob 5,15",
+        "aliases": [],
+        "quote": "Tob 5,15 is often cited as an independent witness",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Tob 5,15",
+        "note": null
+      },
+      {
+        "id": "n8",
+        "type": "PrimaryText",
+        "name": "Lk 15,8",
+        "aliases": [],
+        "quote": "The parable of the lost coin (Lk 15,8)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Lk 15,8",
+        "note": null
+      },
+      {
+        "id": "n9",
+        "type": "PrimaryText",
+        "name": "Polyb. 6.39.12",
+        "aliases": [],
+        "quote": "two obols a day (Polyb. 6.39.12)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Polyb. 6.39.12",
+        "note": null
+      },
+      {
+        "id": "n10",
+        "type": "PrimaryText",
+        "name": "Tac. Ann. 1.17",
+        "aliases": [],
+        "quote": "ten asses a day (Tac. Ann. 1.17)",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": "Tac. Ann. 1.17",
+        "note": null
+      },
+      {
+        "id": "n11",
+        "type": "AncientAuthor",
+        "name": "Polybius",
+        "aliases": [],
+        "quote": "Polybius gives the Roman infantryman two obols a day",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n12",
+        "type": "AncientAuthor",
+        "name": "Tacitus",
+        "aliases": [],
+        "quote": "Tacitus has the mutineers of AD 14 complain of ten asses a day",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n13",
+        "type": "Object",
+        "name": "denarius",
+        "aliases": [],
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n14",
+        "type": "Concept",
+        "name": "day's wage",
+        "aliases": [],
+        "quote": "Her recent defence of the \"day's wage\" reading",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n15",
+        "type": "Concept",
+        "name": "military pay",
+        "aliases": [],
+        "quote": "Military pay offers the only well-documented scale.",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n16",
+        "type": "Place",
+        "name": "Galilee",
+        "aliases": [],
+        "quote": "they do not tell us what labourers in Galilee were paid",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n17",
+        "type": "Argument",
+        "name": "the denarius in Mt 20,2 is a narrative convention, not a wage datum",
+        "aliases": [],
+        "quote": "the denarius in Mt 20,2 is a narrative convention, not a wage datum",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n18",
+        "type": "Argument",
+        "name": "the denarius was a day's wage for an unskilled labourer",
+        "aliases": [],
+        "quote": "Her recent defence of the \"day's wage\" reading",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      },
+      {
+        "id": "n19",
+        "type": "Argument",
+        "name": "soldiers in the early principate received less than a denarius a day before deductions",
+        "aliases": [],
+        "quote": "If soldiers in the early principate received less than a denarius a day before deductions",
+        "surname": null,
+        "given_names": null,
+        "cited_years": [],
+        "is_document_author": false,
+        "citation": null,
+        "note": null
+      }
+    ],
+    "edges": [
+      {
+        "source": "DOC",
+        "target": "n1",
+        "relation": "written_by",
+        "quote": "_Tobias Renner, Universität Kesselberg_",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n17",
+        "relation": "advances",
+        "quote": "the denarius in Mt 20,2 is a narrative convention, not a wage datum",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n17",
+        "relation": "argues",
+        "quote": "the denarius in Mt 20,2 is a narrative convention, not a wage datum",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n2",
+        "target": "n18",
+        "relation": "argues",
+        "quote": "Her recent defence of the \"day's wage\" reading",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n18",
+        "relation": "disputes",
+        "quote": "Pace Marwick, the denarius in Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n2",
+        "relation": "disagrees_with",
+        "quote": "I disagree with her conclusion for the reasons given here.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n4",
+        "relation": "cites",
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n5",
+        "relation": "cites",
+        "quote": "The two hundred denarii of Mk 6,37",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n6",
+        "relation": "cites",
+        "quote": "the famine price of Offb 6,6",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n7",
+        "relation": "cites",
+        "quote": "Tob 5,15 is often cited as an independent witness",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n8",
+        "relation": "cites",
+        "quote": "The parable of the lost coin (Lk 15,8)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n9",
+        "relation": "cites",
+        "quote": "two obols a day (Polyb. 6.39.12)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n10",
+        "relation": "cites",
+        "quote": "ten asses a day (Tac. Ann. 1.17)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n11",
+        "relation": "discusses",
+        "quote": "Polybius gives the Roman infantryman two obols a day",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n12",
+        "relation": "discusses",
+        "quote": "Tacitus has the mutineers of AD 14 complain of ten asses a day",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n13",
+        "relation": "discusses",
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n15",
+        "relation": "discusses",
+        "quote": "Military pay offers the only well-documented scale.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "DOC",
+        "target": "n16",
+        "relation": "discusses",
+        "quote": "they do not tell us what labourers in Galilee were paid",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n17",
+        "target": "n4",
+        "relation": "grounded_in",
+        "quote": "the denarius in Mt 20,2 is a narrative convention, not a wage datum",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n17",
+        "target": "n13",
+        "relation": "about",
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n18",
+        "target": "n14",
+        "relation": "about",
+        "quote": "Her recent defence of the \"day's wage\" reading",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n18",
+        "target": "n4",
+        "relation": "grounded_in",
+        "quote": "Her recent defence of the \"day's wage\" reading",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n19",
+        "target": "n10",
+        "relation": "grounded_in",
+        "quote": "ten asses a day (Tac. Ann. 1.17)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n19",
+        "target": "n9",
+        "relation": "grounded_in",
+        "quote": "two obols a day (Polyb. 6.39.12)",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n19",
+        "target": "n15",
+        "relation": "about",
+        "quote": "Military pay offers the only well-documented scale.",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n1",
+        "target": "n19",
+        "relation": "argues",
+        "quote": "If soldiers in the early principate received less than a denarius a day before deductions",
+        "confidence": "inferred"
+      },
+      {
+        "source": "n13",
+        "target": "n4",
+        "relation": "attested_in",
+        "quote": "the denarius in Mt 20,2 is a narrative convention",
+        "confidence": "extracted"
+      },
+      {
+        "source": "n13",
+        "target": "n5",
+        "relation": "attested_in",
+        "quote": "The two hundred denarii of Mk 6,37",
+        "confidence": "extracted"
+      }
+    ],
+    "schema_proposals": []
+  }
+}
