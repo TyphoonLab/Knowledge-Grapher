@@ -4,7 +4,7 @@ CG := uv run corpus-graph
 SAMPLE := --root sample
 SAMPLE_CHUNKS := --chunk-tokens 700   # small chunks so the 3 short articles exercise multi-chunk merging
 
-.PHONY: sample sample-build sample-live test serve clean-sample install
+.PHONY: sample sample-build sample-live test serve clean-sample install arch-pkg
 
 install:
 	uv sync
@@ -38,3 +38,7 @@ serve:
 
 clean-sample:
 	rm -rf sample/work sample/out
+
+# Arch Linux / CachyOS package (local makepkg, no AUR); see packaging/archlinux/CACHYOS.md
+arch-pkg:
+	cd packaging/archlinux && makepkg -sf

@@ -6,6 +6,8 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
 import tempfile
 import unicodedata
@@ -37,7 +39,9 @@ class Workspace:
 
     @classmethod
     def from_args(cls, root=None, input=None, work=None, out=None, canon=None) -> "Workspace":
-        r = Path(root or os.environ.get("CORPUS_GRAPH_ROOT") or ".").resolve()
+        """Root precedence: --root, $CORPUS_GRAPH_ROOT, the current directory if it is a
+        workspace, CORPUS_GRAPH_ROOT in ~/.config/corpus-graph/config, the current directory."""
+        r = Path(root or os.environ.get("CORPUS_GRAPH_ROOT") or _default_root()).expanduser().resolve()
 
         def pick(v, name):
             return Path(v).resolve() if v else r / name
@@ -80,6 +84,38 @@ class Workspace:
     def ensure(self) -> None:
         for d in (self.work, self.md_dir, self.extract_dir, self.out):
             d.mkdir(parents=True, exist_ok=True)
+
+
+def config_dir() -> Path:
+    return Path(os.environ.get("XDG_CONFIG_HOME") or Path.home() / ".config") / "corpus-graph"
+
+
+def user_config() -> dict[str, str]:
+    """~/.config/corpus-graph/config: shell-style KEY=VALUE lines (also sourced by the desktop scripts)."""
+    out: dict[str, str] = {}
+    try:
+        text = (config_dir() / "config").read_text(encoding="utf-8")
+    except OSError:
+        return out
+    for line in text.splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        k, v = line.split("=", 1)
+        k = k.strip().removeprefix("export ").strip()
+        v = v.strip()
+        if len(v) >= 2 and v[0] == v[-1] and v[0] in "'\"":
+            v = v[1:-1]
+        out[k] = os.path.expanduser(os.path.expandvars(v))
+    return out
+
+
+def _default_root() -> Path:
+    cwd = Path.cwd()
+    if any((cwd / d).is_dir() for d in ("canon", "input", "work")):
+        return cwd
+    cfg = user_config().get("CORPUS_GRAPH_ROOT")
+    return Path(cfg) if cfg else cwd
 
 
 # --------------------------------------------------------------------------- hashing / IO
@@ -270,6 +306,19 @@ def detect_language(text: str) -> str:
 
 def eprint(*args, **kwargs) -> None:
     print(*args, file=sys.stderr, **kwargs)
+
+
+def notify(summary: str, body: str = "", urgency: str = "normal") -> bool:
+    """Desktop notification via notify-send (libnotify); any freedesktop daemon, e.g. Noctalia's, shows it."""
+    exe = shutil.which("notify-send")
+    if not exe:
+        return False
+    try:
+        subprocess.run([exe, "-a", "corpus-graph", "-i", "corpus-graph", "-u", urgency, summary, body],
+                       capture_output=True, timeout=5, check=False)
+    except (OSError, subprocess.TimeoutExpired):
+        return False
+    return True
 
 
 def confirm(prompt: str) -> bool:

@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = python
+
+[Action]
+Description = Checking corpus-graph against the new Python...
+When = PostTransaction
+Exec = /opt/corpus-graph/libexec/check-python

@@ -1,0 +1,14 @@
+#!/bin/sh
+# corpus-graph launcher (installed by the corpus-graph package; see /usr/share/doc/corpus-graph/CACHYOS.md)
+prefix=${CORPUS_GRAPH_PREFIX:-/opt/corpus-graph}
+if [ -x "$prefix/python/bin/python3" ]; then
+    py="$prefix/python/bin/python3"
+else
+    py=/usr/bin/python3
+fi
+# Claude Code's native installer puts `claude` in ~/.local/bin, which niri/systemd sessions often lack.
+if [ -d "$HOME/.local/bin" ]; then
+    case ":$PATH:" in *":$HOME/.local/bin:"*) ;; *) PATH="$HOME/.local/bin:$PATH"; export PATH ;; esac
+fi
+# -s: no user site-packages, -E: ignore PYTHON* variables, -X utf8: Greek and Hebrew safe in any locale
+exec "$py" -s -E -X utf8 "$prefix/libexec/launcher.py" "$@"

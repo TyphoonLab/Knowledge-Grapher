@@ -40,6 +40,15 @@ Choices made while building corpus-graph, including where the implementation dep
 - **Logging.** Every LLM call goes to `work/llm_log.jsonl` (backend, model, purpose, doc, chunk, chunk tokens, tokens in/out, cache read/write, cost, duration, error). The pre-run cost estimate fits output tokens per chunk from this log once three live calls exist.
 - **No telemetry, no network** except the LLM backend. `claude -p` is run from an empty temporary directory with tools, MCP servers, settings files and slash commands disabled.
 
+## Arch / CachyOS packaging
+
+- **No AUR, and no mixing of system and pip Python packages.** `leidenalg` is AUR-only and `pymupdf4llm` imports only with the exact PyMuPDF it was released with, which Arch's `python-pymupdf` is not, so the package installs the `uv.lock` set (hash-checked) into `/opt/corpus-graph/lib`. Only build tools and optional extras come from pacman.
+- **Bundled CPython by default.** A rolling-release Python minor upgrade would otherwise orphan the compiled wheels. `CORPUS_GRAPH_PYTHON=system makepkg` uses `/usr/bin/python3` instead and installs a pacman hook that warns when a rebuild is needed.
+- **Built from committed `HEAD`** (`git archive`), so the package is reproducible from a commit; makepkg's `check()` runs the sample pipeline through the packaged launcher.
+- **User configuration is never edited silently.** `corpus-graph-setup` only touches niri and Noctalia configs when asked (`--niri`, `--noctalia`), appends a marked block once, and backs up niri's `config.kdl`.
+- **Theme via a Noctalia user template** rendered to `~/.config/corpus-graph/theme.css`, which the viewer re-reads on focus; it uses Material colour roles (`surface`, `on_surface`, `primary`, `outline_variant`, …) in the `{{colors.<role>.default.hex}}` form shared by Noctalia v4 and v5 templates.
+- **Workspace lookup** now also reads `CORPUS_GRAPH_ROOT` from `~/.config/corpus-graph/config` when the current directory is not a workspace, so launcher actions, the systemd unit and terminal use agree on one workspace.
+
 ## Known limitations
 
 - **Legacy-encoded Greek** in older PDFs (pre-Unicode fonts) comes out as Latin gibberish that the yield heuristic cannot detect. Such files need OCR (marker-pdf) or re-sourcing. Check `work/md/` for Greek passages after the first real ingest.

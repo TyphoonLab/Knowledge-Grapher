@@ -1,0 +1,10 @@
+#!/bin/sh
+# Run the viewer server for the workspace in ~/.config/corpus-graph/config (used by the systemd user unit).
+conf="${XDG_CONFIG_HOME:-$HOME/.config}/corpus-graph/config"
+# shellcheck source=/dev/null
+if [ -r "$conf" ]; then set -a; . "$conf"; set +a; fi
+if [ -z "${CORPUS_GRAPH_ROOT:-}" ]; then
+    echo "corpus-graph-serve: set CORPUS_GRAPH_ROOT in $conf (run corpus-graph-setup)" >&2
+    exit 1
+fi
+exec corpus-graph --root "$CORPUS_GRAPH_ROOT" serve --no-browser --port "${CORPUS_GRAPH_PORT:-8765}"

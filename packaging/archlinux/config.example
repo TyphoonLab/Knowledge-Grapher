@@ -1,0 +1,16 @@
+# ~/.config/corpus-graph/config: read by corpus-graph, corpus-graph-open and the systemd user unit.
+# Plain KEY=VALUE lines (it is also sourced by /bin/sh, so no spaces around "=").
+
+# Your workspace: input/, canon/, work/, out/ live here.
+CORPUS_GRAPH_ROOT=$HOME/Research/corpus-graph
+
+# Port of the local viewer (127.0.0.1 only).
+CORPUS_GRAPH_PORT=8765
+
+# Browser for the viewer window. %u is replaced by the URL. Empty = your default browser,
+# opened as an app window (Chromium family) or a new window (Firefox family).
+# CORPUS_GRAPH_BROWSER="chromium --app=%u"
+CORPUS_GRAPH_BROWSER=
+
+# Path to the claude CLI if it is not on PATH (the native installer uses ~/.local/bin/claude).
+# CORPUS_GRAPH_CLAUDE=$HOME/.local/bin/claude

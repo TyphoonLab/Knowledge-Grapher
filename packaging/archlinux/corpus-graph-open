@@ -1,0 +1,125 @@
+#!/bin/sh
+# corpus-graph-open: what the desktop entry, the niri keybinding and Noctalia's launcher run.
+#
+#   corpus-graph-open            start the viewer server if needed and open it in a window
+#   corpus-graph-open --report   open out/REPORT.md
+#   corpus-graph-open --vault    export the Obsidian vault and open it
+#   corpus-graph-open --rebuild  resolve + build + report (no LLM calls), then notify
+#
+# Settings come from ~/.config/corpus-graph/config (see /usr/share/corpus-graph/config.example).
+set -u
+conf="${XDG_CONFIG_HOME:-$HOME/.config}/corpus-graph/config"
+# shellcheck source=/dev/null
+if [ -r "$conf" ]; then set -a; . "$conf"; set +a; fi
+port=${CORPUS_GRAPH_PORT:-8765}
+url="http://127.0.0.1:$port/"
+root=${CORPUS_GRAPH_ROOT:-}
+
+say() {
+    if command -v notify-send >/dev/null 2>&1; then
+        notify-send -a corpus-graph -i corpus-graph ${3:+-u "$3"} "$1" "${2:-}"
+    else
+        printf '%s: %s\n' "$1" "${2:-}" >&2
+    fi
+}
+
+need_root() {
+    if [ -z "$root" ]; then
+        say "corpus-graph is not set up" "Run corpus-graph-setup in a terminal first." critical
+        exit 1
+    fi
+}
+
+up() { curl -fsS -o /dev/null --max-time 1 "$url" 2>/dev/null; }
+
+start_server() {
+    up && return 0
+    if systemctl --user cat corpus-graph-serve.service >/dev/null 2>&1; then
+        systemctl --user start corpus-graph-serve.service
+    else
+        setsid -f corpus-graph --root "$root" serve --no-browser --port "$port" >/dev/null 2>&1
+    fi
+    i=0
+    while [ $i -lt 40 ]; do
+        up && return 0
+        sleep 0.25
+        i=$((i + 1))
+    done
+    say "corpus-graph viewer did not start" "Check: journalctl --user -u corpus-graph-serve" critical
+    exit 1
+}
+
+# The default browser's command, from its desktop entry (field codes removed).
+default_browser_cmd() {
+    id=$(xdg-settings get default-web-browser 2>/dev/null) || return 1
+    for d in "${XDG_DATA_HOME:-$HOME/.local/share}" $(printf '%s' "${XDG_DATA_DIRS:-/usr/local/share:/usr/share}" | tr ':' ' '); do
+        f="$d/applications/$id"
+        if [ -r "$f" ]; then
+            sed -n 's/^Exec=//p' "$f" | head -n1 | sed 's/ *%[uUfFick]//g'
+            return 0
+        fi
+    done
+    return 1
+}
+
+open_window() {
+    if [ -n "${CORPUS_GRAPH_BROWSER:-}" ]; then
+        case "$CORPUS_GRAPH_BROWSER" in
+            *%u*) cmd=$(printf '%s' "$CORPUS_GRAPH_BROWSER" | sed "s|%u|$1|g") ;;
+            *) cmd="$CORPUS_GRAPH_BROWSER $1" ;;
+        esac
+        setsid -f sh -c "$cmd" >/dev/null 2>&1
+        return
+    fi
+    cmd=$(default_browser_cmd || true)
+    case "$cmd" in
+        *flatpak*|"") setsid -f xdg-open "$1" >/dev/null 2>&1; return ;;
+    esac
+    exe=$(basename "$(printf '%s' "$cmd" | awk '{print $1}')")
+    case "$exe" in
+        chromium*|google-chrome*|chrome*|brave*|vivaldi*|thorium*|helium*|cromite*)
+            setsid -f sh -c "$cmd --app=$1" >/dev/null 2>&1 ;;
+        firefox*|librewolf*|zen*|floorp*|waterfox*|mullvad-browser*)
+            setsid -f sh -c "$cmd --new-window $1" >/dev/null 2>&1 ;;
+        *)
+            setsid -f xdg-open "$1" >/dev/null 2>&1 ;;
+    esac
+}
+
+case "${1:-}" in
+    --report)
+        need_root
+        if [ -r "$root/out/REPORT.md" ]; then
+            setsid -f xdg-open "$root/out/REPORT.md" >/dev/null 2>&1
+        else
+            say "No report yet" "Run corpus-graph run (or the Rebuild action) first."
+        fi ;;
+    --vault)
+        need_root
+        vault="$root/out/vault"
+        if corpus-graph --root "$root" export-vault "$vault" >/dev/null 2>&1; then
+            if command -v obsidian >/dev/null 2>&1 || [ -d /var/lib/flatpak/app/md.obsidian.Obsidian ]; then
+                setsid -f xdg-open "obsidian://open?path=$vault" >/dev/null 2>&1
+            else
+                setsid -f xdg-open "$vault" >/dev/null 2>&1
+            fi
+        else
+            say "Vault export failed" "Is there a graph yet? Run corpus-graph run first." critical
+        fi ;;
+    --rebuild)
+        need_root
+        say "corpus-graph" "Rebuilding the graph (no LLM calls)…"
+        if corpus-graph --root "$root" resolve && corpus-graph --root "$root" build \
+           && corpus-graph --root "$root" report && corpus-graph --root "$root" serve --write-only; then
+            say "corpus-graph: graph rebuilt" "Reload the viewer to see it."
+        else
+            say "corpus-graph: rebuild failed" "Run it in a terminal to see why: corpus-graph run" critical
+        fi ;;
+    ""|--viewer)
+        need_root
+        start_server
+        open_window "$url" ;;
+    *)
+        echo "usage: corpus-graph-open [--viewer|--report|--vault|--rebuild]" >&2
+        exit 2 ;;
+esac

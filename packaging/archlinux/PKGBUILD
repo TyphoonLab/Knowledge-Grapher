@@ -1,0 +1,172 @@
+# corpus-graph for Arch Linux / CachyOS, built locally with makepkg. Nothing comes from the AUR.
+#
+#   cd packaging/archlinux && makepkg -si
+#
+# Where things come from:
+#   pacman (official repos)   uv, git (build); gcc-libs, curl, xdg-utils (run); optional extras
+#   uv.lock (PyPI wheels)     every Python dependency, pinned and hash-checked, installed into
+#                             /opt/corpus-graph/lib. Arch's python-pymupdf (1.26) cannot satisfy
+#                             pymupdf4llm, which requires the exact PyMuPDF it was released with,
+#                             and leidenalg is only in the AUR, so the package carries its own.
+#   python-build-standalone   a private CPython in /opt/corpus-graph/python (default), so a
+#                             python 3.x -> 3.y upgrade on a rolling release cannot break the
+#                             compiled wheels. Build with CORPUS_GRAPH_PYTHON=system to use
+#                             /usr/bin/python3 instead; a pacman hook then tells you when to rebuild.
+#
+# The build uses the network (PyPI, and GitHub for the CPython download) through uv.
+
+pkgname=corpus-graph
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Scholarly documents to a typed, provenance-backed knowledge graph (NT, classics, ancient economy)"
+arch=('x86_64')
+url="https://github.com/TyphoonLab/Knowledge-Grapher"
+license=('LicenseRef-corpus-graph' 'ISC' 'AGPL-3.0-or-later')   # project, bundled D3, bundled PyMuPDF
+depends=('gcc-libs' 'glibc' 'curl' 'xdg-utils' 'util-linux')
+makedepends=('uv' 'git')
+optdepends=(
+  'libnotify: notifications when long runs finish (shown by Noctalia or any notification daemon)'
+  'tesseract: OCR engine for image-only PDF pages (corpus-graph ingest --ocr)'
+  'tesseract-data-grc: OCR for polytonic (Ancient) Greek'
+  'tesseract-data-heb: OCR for Hebrew'
+  'tesseract-data-lat: OCR for Latin'
+  'tesseract-data-eng: OCR for English'
+  'tesseract-data-deu: OCR for German'
+  'tesseract-data-fra: OCR for French'
+  'tesseract-data-ita: OCR for Italian'
+  'obsidian: open the exported vault (or use the Flathub build, md.obsidian.Obsidian)'
+  'chromium: a dedicated viewer window (--app mode) that niri window rules can target'
+)
+options=('!strip' '!debug' '!lto')
+install=corpus-graph.install
+source=()
+
+_runtime=${CORPUS_GRAPH_PYTHON:-bundled}   # bundled | system
+_pyver=3.13
+_prefix=/opt/corpus-graph
+
+if [[ $_runtime == system ]]; then
+  depends+=('python')
+fi
+
+_repo() { realpath "$startdir/../.."; }
+
+pkgver() {
+  local repo; repo=$(_repo)
+  printf '0.1.0.r%s.g%s' "$(git -C "$repo" rev-list --count HEAD)" "$(git -C "$repo" rev-parse --short HEAD)"
+}
+
+prepare() {
+  local repo; repo=$(_repo)
+  if ! git -C "$repo" diff --quiet HEAD -- 2>/dev/null; then
+    warning "uncommitted changes in $repo are NOT included (the package is built from HEAD)"
+  fi
+  rm -rf "${srcdir:?}/${pkgname:?}"
+  mkdir -p "$srcdir/$pkgname"
+  git -C "$repo" archive --format=tar HEAD | tar -x -C "$srcdir/$pkgname"
+}
+
+_python() {
+  if [[ $_runtime == system ]]; then
+    echo /usr/bin/python3
+  else
+    echo "$srcdir/runtime/bin/python$_pyver"
+  fi
+}
+
+build() {
+  cd "$srcdir/$pkgname"
+  export UV_CACHE_DIR="$srcdir/uv-cache" UV_NO_CONFIG=1 UV_PYTHON_PREFERENCE=only-managed
+  if [[ $_runtime == bundled ]]; then
+    export UV_PYTHON_INSTALL_DIR="$srcdir/uv-python"
+    uv python install "$_pyver"
+    local py; py=$(uv python find "$_pyver")
+    rm -rf "${srcdir:?}/runtime"
+    cp -a "$(dirname "$(dirname "$(realpath "$py")")")" "$srcdir/runtime"
+  else
+    export UV_PYTHON_PREFERENCE=only-system
+  fi
+  local py; py=$(_python)
+  "$py" -c 'import sys; print(f"{sys.version_info[0]}.{sys.version_info[1]}")' > "$srcdir/PYTHON_VERSION"
+
+  # every dependency from uv.lock, hash-checked; then the project itself
+  uv export --frozen --no-dev --no-emit-project --format requirements-txt -o "$srcdir/requirements.txt"
+  rm -rf "${srcdir:?}/lib"
+  uv pip install --python "$py" --target "$srcdir/lib" --require-hashes --no-deps -r "$srcdir/requirements.txt"
+  uv pip install --python "$py" --target "$srcdir/lib" --no-deps .
+  rm -rf "${srcdir:?}/lib/bin"   # console scripts with build-time shebangs; /usr/bin/corpus-graph replaces them
+}
+
+check() {
+  # end-to-end smoke test on the bundled sample with recorded responses (no network, no tokens)
+  local py ws; py=$(_python); ws="$srcdir/check-ws"
+  rm -rf "$ws"; mkdir -p "$ws/input"
+  cp "$srcdir/$pkgname"/sample/input/*.md "$ws/input/"
+  _cg() { HOME="$srcdir" XDG_CONFIG_HOME="$srcdir/.config" "$py" -s -E -X utf8 \
+            "$srcdir/$pkgname/packaging/archlinux/launcher.py" --lib "$srcdir/lib" --root "$ws" "$@"; }
+  _cg init >/dev/null
+  _cg ingest
+  _cg extract --backend replay --fixtures "$srcdir/$pkgname/sample/fixtures" --chunk-tokens 700
+  _cg resolve
+  _cg build
+  _cg report
+  _cg serve --write-only
+  _cg query "Mark 12" >/dev/null
+  local rc=0; _cg query "Holt" >/dev/null || rc=$?
+  [[ $rc == 3 ]] || { error "query exit code $rc, expected 3"; return 1; }
+  grep -q "Contested passages" "$ws/out/REPORT.md"
+}
+
+package() {
+  cd "$srcdir/$pkgname"
+  local p="$pkgdir$_prefix" here="packaging/archlinux"
+  install -d "$p"
+  if [[ $_runtime == bundled ]]; then
+    cp -a "$srcdir/runtime" "$p/python"
+  fi
+  cp -a "$srcdir/lib" "$p/lib"
+  install -Dm644 "$here/launcher.py" "$p/libexec/launcher.py"
+  install -Dm755 "$here/check-python" "$p/libexec/check-python"
+  install -Dm644 "$srcdir/PYTHON_VERSION" "$p/PYTHON_VERSION"
+  echo "$_runtime" > "$p/RUNTIME"
+  # byte-compile with the final paths (the tree is root-owned, so Python cannot do it later)
+  local py; py=$(_python)
+  "$py" -m compileall -q -j0 -d "$_prefix/lib" "$p/lib" >/dev/null || true
+  if [[ $_runtime == bundled ]]; then
+    find "$p/python" -name 'EXTERNALLY-MANAGED' -delete
+  fi
+
+  # commands
+  install -Dm755 "$here/corpus-graph" "$pkgdir/usr/bin/corpus-graph"
+  install -Dm755 "$here/corpus-graph-open" "$pkgdir/usr/bin/corpus-graph-open"
+  install -Dm755 "$here/corpus-graph-serve" "$pkgdir/usr/bin/corpus-graph-serve"
+  install -Dm755 "$here/corpus-graph-setup" "$pkgdir/usr/bin/corpus-graph-setup"
+
+  # desktop integration
+  install -Dm644 "$here/corpus-graph.desktop" "$pkgdir/usr/share/applications/corpus-graph.desktop"
+  install -Dm644 "$here/corpus-graph.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/corpus-graph.svg"
+  install -Dm644 "$here/corpus-graph-serve.service" "$pkgdir/usr/lib/systemd/user/corpus-graph-serve.service"
+  install -Dm644 "$here/niri/corpus-graph.kdl" "$pkgdir/usr/share/corpus-graph/niri/corpus-graph.kdl"
+  install -Dm644 "$here/noctalia/corpus-graph.css" "$pkgdir/usr/share/corpus-graph/noctalia/corpus-graph.css"
+  install -Dm644 "$here/noctalia/config-v5.toml" "$pkgdir/usr/share/corpus-graph/noctalia/config-v5.toml"
+  install -Dm644 "$here/noctalia/user-templates-v4.toml" "$pkgdir/usr/share/corpus-graph/noctalia/user-templates-v4.toml"
+  install -Dm644 "$here/config.example" "$pkgdir/usr/share/corpus-graph/config.example"
+  install -Dm644 .claude/skills/corpus-graph/SKILL.md "$pkgdir/usr/share/corpus-graph/claude-skill/SKILL.md"
+  if [[ $_runtime == system ]]; then
+    install -Dm644 "$here/corpus-graph-python.hook" "$pkgdir/usr/share/libalpm/hooks/corpus-graph-python.hook"
+  fi
+
+  # the sample corpus, for trying things out
+  install -d "$pkgdir/usr/share/corpus-graph/sample"
+  cp -a sample/input sample/fixtures "$pkgdir/usr/share/corpus-graph/sample/"
+
+  # documentation and licences
+  install -Dm644 README.md DECISIONS.md "$here/CACHYOS.md" -t "$pkgdir/usr/share/doc/corpus-graph/"
+  install -Dm644 src/corpus_graph/viewer/vendor/d3-LICENSE.txt "$pkgdir/usr/share/licenses/corpus-graph/d3-ISC.txt"
+  local lic
+  for lic in "$p"/lib/pymupdf-*.dist-info/COPYING* "$p"/lib/pymupdf-*.dist-info/licenses/*; do
+    if [[ -f $lic ]]; then
+      install -Dm644 "$lic" "$pkgdir/usr/share/licenses/corpus-graph/PyMuPDF-$(basename "$lic")"
+    fi
+  done
+}

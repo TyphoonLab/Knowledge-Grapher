@@ -1,0 +1,28 @@
+// corpus-graph for niri (needs niri 25.11+ for `include`).
+//
+// corpus-graph-setup --niri copies this file to ~/.config/niri/corpus-graph.kdl; then add,
+// at the top level of ~/.config/niri/config.kdl:
+//
+//     include "corpus-graph.kdl"                  // niri 25.11+
+//     include "corpus-graph.kdl" optional=true    // niri 26.04+: no error if the file is missing
+//
+// Edit the copy, not this file. Change the keys if they clash with your bindings.
+
+binds {
+    // the viewer (starts the local server if it is not running)
+    Mod+Shift+G hotkey-overlay-title="corpus-graph: open viewer" { spawn "corpus-graph-open"; }
+    // re-run resolve, build and report (no LLM calls), with a notification when done
+    Mod+Ctrl+Shift+G hotkey-overlay-title="corpus-graph: rebuild graph" { spawn "corpus-graph-open" "--rebuild"; }
+}
+
+// The viewer's page title is "corpus-graph", so the window title starts with it in Chromium
+// --app windows and in Firefox ("corpus-graph — Mozilla Firefox"). Some browsers set the title
+// only after the window has opened; if this rule does not take effect, find the app-id with
+// `niri msg windows` and match on app-id instead.
+window-rule {
+    match title="^corpus-graph"
+    default-column-width { proportion 0.75; }
+}
+
+// The Markdown source pages opened from provenance links ("<article title>" windows) are
+// ordinary browser tabs and are not matched here.

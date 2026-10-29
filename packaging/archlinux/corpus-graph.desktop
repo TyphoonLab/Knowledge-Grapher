@@ -1,0 +1,24 @@
+[Desktop Entry]
+Type=Application
+Name=Corpus Graph
+GenericName=Scholarly Knowledge Graph
+Comment=Browse the knowledge graph of your scholarly corpus
+Exec=corpus-graph-open
+Icon=corpus-graph
+Terminal=false
+Categories=Education;Science;
+Keywords=knowledge graph;bible;classics;citations;research;scholarship;
+StartupNotify=false
+Actions=rebuild;report;vault;
+
+[Desktop Action rebuild]
+Name=Rebuild graph (no LLM calls)
+Exec=corpus-graph-open --rebuild
+
+[Desktop Action report]
+Name=Open report
+Exec=corpus-graph-open --report
+
+[Desktop Action vault]
+Name=Export and open Obsidian vault
+Exec=corpus-graph-open --vault

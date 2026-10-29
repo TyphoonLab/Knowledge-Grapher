@@ -18,8 +18,8 @@ from .chunking import DEFAULT_CHUNK_TOKENS, Chunk, ParsedMarkdown, QuoteLocator,
 from .llm import LLMError, list_price, make_backend, model_id
 from .prompts import PROMPT_VERSION, extraction_schema, system_prompt, user_prompt
 from .schema import Schema
-from .util import (Workspace, append_jsonl, confirm, eprint, estimate_tokens, nfc, read_json, read_jsonl, sha256_text,
-                   write_json)
+from .util import (Workspace, append_jsonl, confirm, eprint, estimate_tokens, nfc, notify, read_json, read_jsonl,
+                   sha256_text, write_json)
 
 MAX_QUOTE_WORDS = 25
 DOC_GATE = 30  # ask before processing more documents than this in one run
@@ -103,7 +103,7 @@ def estimate(plans: list[DocPlan], schema: Schema, model: str, log_path: Path | 
 def run(ws: Workspace, backend: str = "claude-cli", model: str = "sonnet", effort: str | None = None,
         jobs: int = 2, chunk_tokens: int = DEFAULT_CHUNK_TOKENS, yes: bool = False, limit: int | None = None,
         force: bool = False, fixtures: Path | None = None, record: Path | None = None,
-        only: list[str] | None = None, dry_run: bool = False) -> dict:
+        only: list[str] | None = None, dry_run: bool = False, notify_done: bool = False) -> dict:
     ws.ensure()
     schema = Schema.load(ws.canon)
     plans = plan(ws, schema, chunk_tokens, force, only)
@@ -191,6 +191,10 @@ def run(ws: Workspace, backend: str = "claude-cli", model: str = "sonnet", effor
         f"{totals['nodes']} nodes, {totals['edges']} edges kept, {totals['rejected']} rejected "
         f"(see {ws.rejected_log.name})"
     )
+    if notify_done:
+        notify("corpus-graph: extraction finished",
+               f"{totals['done']} chunk(s) done, {totals['failed']} failed; {totals['nodes']} nodes, {totals['edges']} edges",
+               "critical" if totals["failed"] else "normal")
     return {"estimate": est, "processed": totals["done"], **totals}
 
 

@@ -1,0 +1,133 @@
+#!/bin/sh
+# corpus-graph-setup: per-user setup after installing the package. Idempotent; never needs root.
+#
+#   corpus-graph-setup [--workspace DIR] [--niri] [--noctalia] [--service] [--sample] [--all]
+#
+#   (always)    create the workspace (input/, canon/ seeds) and ~/.config/corpus-graph/config,
+#               copy the Claude Code skill into the workspace, check for the claude CLI
+#   --niri      copy the niri snippet to ~/.config/niri/corpus-graph.kdl and add an include line
+#               to config.kdl (appended once, at the end, marked; nothing else is touched)
+#   --noctalia  register the corpus-graph theme template with Noctalia (v5 config.toml, or the
+#               v4 user-templates.toml), appended once and marked
+#   --service   enable the viewer's systemd user service (starts with your session)
+#   --sample    also create a separate sample workspace (~/corpus-graph-sample) and build it
+#   --all       --niri --noctalia --service
+set -eu
+share=${CORPUS_GRAPH_SHARE:-/usr/share/corpus-graph}
+cfgdir="${XDG_CONFIG_HOME:-$HOME/.config}"
+conf="$cfgdir/corpus-graph/config"
+mark="# added by corpus-graph-setup"
+ws="" niri=0 noct=0 svc=0 sample=0
+
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --workspace) ws=$2; shift ;;
+        --niri) niri=1 ;;
+        --noctalia) noct=1 ;;
+        --service) svc=1 ;;
+        --sample) sample=1 ;;
+        --all) niri=1; noct=1; svc=1 ;;
+        -h|--help) sed -n '2,18p' "$0"; exit 0 ;;
+        *) echo "unknown option $1" >&2; exit 2 ;;
+    esac
+    shift
+done
+
+if [ "$(id -u)" = 0 ] && [ -z "${CORPUS_GRAPH_ALLOW_ROOT:-}" ]; then
+    echo "run corpus-graph-setup as your own user, not root" >&2
+    exit 1
+fi
+
+# --- config + workspace -------------------------------------------------------------
+if [ -r "$conf" ]; then
+    set -a
+    # shellcheck source=/dev/null
+    . "$conf"
+    set +a
+fi
+ws=${ws:-${CORPUS_GRAPH_ROOT:-$HOME/Research/corpus-graph}}
+case "$ws" in /*) ;; *) ws="$PWD/$ws" ;; esac
+mkdir -p "$cfgdir/corpus-graph"
+if [ ! -e "$conf" ]; then
+    sed "s|^CORPUS_GRAPH_ROOT=.*|CORPUS_GRAPH_ROOT=$ws|" "$share/config.example" > "$conf"
+    echo "wrote $conf"
+elif ! grep -q "^CORPUS_GRAPH_ROOT=" "$conf"; then
+    printf '\nCORPUS_GRAPH_ROOT=%s\n' "$ws" >> "$conf"
+fi
+corpus-graph --root "$ws" init
+mkdir -p "$ws/.claude/skills/corpus-graph"
+cp "$share/claude-skill/SKILL.md" "$ws/.claude/skills/corpus-graph/SKILL.md"
+echo "workspace: $ws  (put PDFs/DOCX/MD in $ws/input; start Claude Code in $ws to use the skill)"
+
+# --- niri ---------------------------------------------------------------------------
+if [ $niri = 1 ]; then
+    nd="$cfgdir/niri"
+    if [ ! -d "$nd" ]; then
+        echo "niri: $nd not found; skipped"
+    else
+        [ -e "$nd/corpus-graph.kdl" ] || cp "$share/niri/corpus-graph.kdl" "$nd/corpus-graph.kdl"
+        if [ -f "$nd/config.kdl" ] && ! grep -q 'include "corpus-graph.kdl"' "$nd/config.kdl"; then
+            cp "$nd/config.kdl" "$nd/config.kdl.bak-corpus-graph"
+            # KDL comments are //, not #
+            printf '\n// added by corpus-graph-setup (backup: config.kdl.bak-corpus-graph)\ninclude "corpus-graph.kdl"\n' >> "$nd/config.kdl"
+            echo "niri: added include to $nd/config.kdl; Mod+Shift+G opens the viewer (edit $nd/corpus-graph.kdl)"
+            if command -v niri >/dev/null 2>&1 && ! niri validate >/dev/null 2>&1; then
+                echo "niri: 'niri validate' reported a problem; includes need niri 25.11+ (restore the .bak if needed)"
+            fi
+        else
+            echo "niri: include already present (or no config.kdl)"
+        fi
+    fi
+fi
+
+# --- Noctalia -----------------------------------------------------------------------
+if [ $noct = 1 ]; then
+    nc="$cfgdir/noctalia"
+    if [ -f "$nc/config.toml" ]; then
+        if ! grep -q 'theme.templates.user.corpus_graph' "$nc"/*.toml 2>/dev/null; then
+            printf '\n%s\n' "$mark" >> "$nc/config.toml"
+            grep -v '^#' "$share/noctalia/config-v5.toml" >> "$nc/config.toml"
+            echo "noctalia (v5): registered the template; re-apply your theme once to render it"
+        else
+            echo "noctalia (v5): template already registered"
+        fi
+    elif [ -f "$nc/user-templates.toml" ]; then
+        if ! grep -q 'templates.corpus_graph' "$nc/user-templates.toml"; then
+            printf '\n%s\n' "$mark" >> "$nc/user-templates.toml"
+            grep -v '^#' "$share/noctalia/user-templates-v4.toml" >> "$nc/user-templates.toml"
+            echo "noctalia (v4): registered the template; change or re-apply your theme to render it"
+        else
+            echo "noctalia (v4): template already registered"
+        fi
+    else
+        echo "noctalia: no config.toml (v5) or user-templates.toml (v4) in $nc."
+        echo "  v5: add the block in $share/noctalia/config-v5.toml to your Noctalia config"
+        echo "  v4: enable user templates in Noctalia's settings, then re-run with --noctalia"
+    fi
+fi
+
+# --- systemd user service -----------------------------------------------------------
+if [ $svc = 1 ]; then
+    systemctl --user daemon-reload
+    systemctl --user enable --now corpus-graph-serve.service
+    echo "service: corpus-graph-serve enabled (http://127.0.0.1:${CORPUS_GRAPH_PORT:-8765}/)"
+fi
+
+# --- sample -------------------------------------------------------------------------
+if [ $sample = 1 ]; then
+    s="$HOME/corpus-graph-sample"
+    mkdir -p "$s/input"
+    cp -n "$share"/sample/input/*.md "$s/input/"
+    corpus-graph --root "$s" init >/dev/null
+    corpus-graph --root "$s" run --backend replay --fixtures "$share/sample/fixtures" --chunk-tokens 700
+    echo "sample: built in $s; browse it with  corpus-graph --root $s serve"
+fi
+
+# --- claude CLI ---------------------------------------------------------------------
+if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
+    echo "claude CLI: found"
+else
+    echo "claude CLI: not found. corpus-graph extract uses it by default. Install the native build"
+    echo "  (official installer, no AUR, no Node.js):  curl -fsSL https://claude.ai/install.sh | bash"
+    echo "  then put ~/.local/bin on PATH (fish, CachyOS's default shell: fish_add_path ~/.local/bin)"
+fi

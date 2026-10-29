@@ -56,6 +56,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--dry-run", action="store_true", help="print the plan and cost estimate only")
     p.add_argument("--force", action="store_true", help="ignore the cache")
     p.add_argument("--record", type=Path, help="also save responses as replay fixtures in this directory")
+    p.add_argument("--notify", action="store_true", help="desktop notification when the run finishes (notify-send)")
 
     p = sub.add_parser("resolve", help="merge entities into canonical nodes; write proposals")
     _llm_args(p)
@@ -94,6 +95,7 @@ def main(argv: list[str] | None = None) -> int:
     p.add_argument("--jobs", type=int, default=2)
     p.add_argument("--yes", action="store_true")
     p.add_argument("--limit", type=int)
+    p.add_argument("--notify", action="store_true", help="desktop notification when the run finishes (notify-send)")
 
     p = sub.add_parser("query", help="subgraph for a question, as Markdown")
     p.add_argument("question", nargs="+")
@@ -136,7 +138,7 @@ def main(argv: list[str] | None = None) -> int:
         from . import extract
 
         r = extract.run(ws, a.backend, a.model, a.effort, a.jobs, a.chunk_tokens, a.yes, a.limit, a.force,
-                        a.fixtures, a.record, a.only, a.dry_run)
+                        a.fixtures, a.record, a.only, a.dry_run, notify_done=a.notify)
         return 1 if r.get("failed") else 0
     if a.cmd == "resolve":
         from . import resolve
@@ -163,8 +165,13 @@ def main(argv: list[str] | None = None) -> int:
     if a.cmd == "serve":
         from . import serve
 
-        path = serve.write_viewer(ws)
-        eprint(f"serve: wrote {path}")
+        if ws.graph_path.exists():
+            eprint(f"serve: wrote {serve.write_viewer(ws)}")
+        elif a.write_only:
+            eprint("serve: out/graph.json not found; run `corpus-graph build` first")
+            return 1
+        else:
+            eprint(f"serve: no graph yet in {ws.root}; serving a placeholder until `corpus-graph build` writes one")
         if a.write_only:
             return 0
         return serve.serve(ws, a.port, open_browser=not a.no_browser)
@@ -172,13 +179,20 @@ def main(argv: list[str] | None = None) -> int:
         from . import build, extract, ingest, report, resolve, serve
 
         ingest.run(ws)
-        r = extract.run(ws, a.backend, a.model, None, a.jobs, a.chunk_tokens, a.yes, a.limit, fixtures=a.fixtures)
+        r = extract.run(ws, a.backend, a.model, None, a.jobs, a.chunk_tokens, a.yes, a.limit, fixtures=a.fixtures,
+                        notify_done=False)
         if r.get("failed"):
             eprint("extract had failures; continuing with what was extracted")
         resolve.run(ws)
         build.run(ws)
         report.run(ws)
         eprint(f"serve: wrote {serve.write_viewer(ws)}  (run `corpus-graph serve` to browse)")
+        if a.notify:
+            from .util import notify, read_json
+
+            c = (read_json(ws.graph_path, {}) or {}).get("meta", {}).get("counts", {})
+            notify("corpus-graph: graph rebuilt", f"{c.get('nodes', 0)} nodes, {c.get('edges', 0)} edges, "
+                                                  f"{c.get('documents', 0)} documents")
         return 0
     if a.cmd in ("query", "path", "explain"):
         from . import query

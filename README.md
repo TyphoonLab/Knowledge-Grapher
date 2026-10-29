@@ -34,6 +34,8 @@ uv sync --extra anthropic   # Anthropic SDK backend (needs ANTHROPIC_API_KEY or 
 
 The default LLM backend is the `claude` CLI (Claude Code) in print mode, which runs on your Claude subscription; it must be installed and logged in.
 
+**CachyOS / Arch (niri + Noctalia), no AUR:** build a local pacman package with `cd packaging/archlinux && makepkg -si`, then run `corpus-graph-setup --all`. That adds a launcher entry, niri keybindings, a Noctalia theme template for the viewer and a systemd user service; see [packaging/archlinux/CACHYOS.md](packaging/archlinux/CACHYOS.md).
+
 Try it on the bundled sample (three synthetic articles; recorded LLM responses, so no tokens are spent):
 
 ```bash

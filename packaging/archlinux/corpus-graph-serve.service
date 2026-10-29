@@ -1,0 +1,16 @@
+[Unit]
+Description=corpus-graph viewer on 127.0.0.1 (workspace from ~/.config/corpus-graph/config)
+Documentation=file:///usr/share/doc/corpus-graph/CACHYOS.md
+ConditionPathExists=%h/.config/corpus-graph/config
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/corpus-graph-serve
+Restart=on-failure
+RestartSec=15
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=full
+
+[Install]
+WantedBy=default.target

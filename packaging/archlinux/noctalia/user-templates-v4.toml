@@ -1,0 +1,5 @@
+# Noctalia Shell legacy v4: enable user templates in Noctalia's settings, then add to
+# ~/.config/noctalia/user-templates.toml
+[templates.corpus_graph]
+input_path  = "/usr/share/corpus-graph/noctalia/corpus-graph.css"
+output_path = "~/.config/corpus-graph/theme.css"

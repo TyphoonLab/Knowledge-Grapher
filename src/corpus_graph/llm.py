@@ -20,7 +20,7 @@ import time
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from .util import append_jsonl, read_json, write_json
+from .util import append_jsonl, read_json, user_config, write_json
 
 # List prices per million tokens (input, output, cache read). Used for estimates and
 # for the SDK backend's cost line; `claude -p` reports its own figure.
@@ -117,9 +117,11 @@ class ClaudeCLIBackend(Backend):
         self.effort = effort
         self.timeout = timeout
         self.retries = retries
-        self.exe = executable or os.environ.get("CORPUS_GRAPH_CLAUDE", "claude")
+        self.exe = (executable or os.environ.get("CORPUS_GRAPH_CLAUDE") or user_config().get("CORPUS_GRAPH_CLAUDE")
+                    or shutil.which("claude") or str(Path.home() / ".local/bin/claude"))  # native installer location
         if not shutil.which(self.exe):
-            raise LLMError(f"`{self.exe}` not found on PATH; install Claude Code or use --backend anthropic")
+            raise LLMError(f"`{self.exe}` not found; install Claude Code (curl -fsSL https://claude.ai/install.sh | bash), "
+                           "set CORPUS_GRAPH_CLAUDE, or use --backend anthropic")
 
     def _call(self, system, user, schema, tag):
         cmd = [

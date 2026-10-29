@@ -1,0 +1,5 @@
+# Noctalia v5+: add to ~/.config/noctalia/config.toml (or any ~/.config/noctalia/*.toml),
+# then check with `noctalia theme --list-templates` and re-apply your theme once.
+[theme.templates.user.corpus_graph]
+input_path  = "/usr/share/corpus-graph/noctalia/corpus-graph.css"
+output_path = "$XDG_CONFIG_HOME/corpus-graph/theme.css"

@@ -1,0 +1,10 @@
+#!/bin/sh
+# pacman hook (system-Python builds only): warn when Arch's python moves to a new minor version.
+built=$(cat /opt/corpus-graph/PYTHON_VERSION 2>/dev/null)
+now=$(/usr/bin/python3 -c 'import sys; print(f"{sys.version_info[0]}.{sys.version_info[1]}")' 2>/dev/null)
+if [ -n "$built" ] && [ "$built" != "$now" ]; then
+    echo "==> corpus-graph was built against Python $built, the system now has Python $now."
+    echo "    Rebuild it: cd <your Knowledge-Grapher checkout>/packaging/archlinux && makepkg -si"
+    echo "    (or rebuild with the bundled runtime, the default, so this cannot happen)."
+fi
+exit 0

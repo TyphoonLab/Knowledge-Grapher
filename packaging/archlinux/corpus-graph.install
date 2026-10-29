@@ -1,0 +1,17 @@
+post_install() {
+    cat <<'MSG'
+==> corpus-graph installed. Per-user setup (no root, run in your own session):
+      corpus-graph-setup --all
+    That creates a workspace and ~/.config/corpus-graph/config, installs the niri snippet and
+    the Noctalia theme template, enables the viewer's systemd user service, and checks for the
+    claude CLI. Details: /usr/share/doc/corpus-graph/CACHYOS.md
+MSG
+}
+
+post_upgrade() {
+    echo "==> corpus-graph upgraded. Restart the viewer: systemctl --user restart corpus-graph-serve"
+}
+
+post_remove() {
+    echo "==> corpus-graph removed. Your workspace and ~/.config/corpus-graph were left alone."
+}
