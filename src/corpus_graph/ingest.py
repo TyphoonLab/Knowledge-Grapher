@@ -84,6 +84,9 @@ def run(ws: Workspace, force: bool = False, use_ocr: bool = False, quiet: bool =
     write_json(ws.work / "manifest.json", manifest)
     if not quiet:
         eprint(f"ingest: {stats['converted']} converted, {stats['skipped']} unchanged, {stats['failed']} failed")
+        if not sum(stats.values()):
+            eprint(f"ingest: no documents found in {ws.input} (workspace {ws.root}); "
+                   f"add PDF/DOCX/MD files there, or pass --root")
     return dict(stats)
 
 

@@ -47,7 +47,7 @@ Choices made while building corpus-graph, including where the implementation dep
 - **Built from committed `HEAD`** (`git archive`), so the package is reproducible from a commit; makepkg's `check()` runs the sample pipeline through the packaged launcher.
 - **User configuration is never edited silently.** `corpus-graph-setup` only touches niri and Noctalia configs when asked (`--niri`, `--noctalia`), appends a marked block once, and backs up niri's `config.kdl`.
 - **Theme via a Noctalia user template** rendered to `~/.config/corpus-graph/theme.css`, which the viewer re-reads on focus; it uses Material colour roles (`surface`, `on_surface`, `primary`, `outline_variant`, …) in the `{{colors.<role>.default.hex}}` form shared by Noctalia v4 and v5 templates.
-- **Workspace lookup** now also reads `CORPUS_GRAPH_ROOT` from `~/.config/corpus-graph/config` when the current directory is not a workspace, so launcher actions, the systemd unit and terminal use agree on one workspace.
+- **Workspace lookup** now also reads `CORPUS_GRAPH_ROOT` from `~/.config/corpus-graph/config` when the current directory is not a workspace (has no `input/`; a source checkout ships `canon/` and must not count), so launcher actions, the systemd unit and terminal use agree on one workspace.
 
 ## Known limitations
 

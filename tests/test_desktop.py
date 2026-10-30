@@ -27,7 +27,11 @@ def test_config_file_supplies_workspace(tmp_path, monkeypatch):
     monkeypatch.chdir(elsewhere)
     assert Workspace.from_args().root == (tmp_path / "ws").resolve()
     # a directory that is itself a workspace wins over the config file
+    # ...but not a source checkout that only ships canon/ (or a stray work/)
     (elsewhere / "canon").mkdir()
+    (elsewhere / "work").mkdir()
+    assert Workspace.from_args().root == (tmp_path / "ws").resolve()
+    (elsewhere / "input").mkdir()
     assert Workspace.from_args().root == elsewhere.resolve()
     # and $CORPUS_GRAPH_ROOT / --root win over both
     monkeypatch.setenv("CORPUS_GRAPH_ROOT", str(tmp_path / "env"))

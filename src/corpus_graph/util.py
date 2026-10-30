@@ -112,7 +112,9 @@ def user_config() -> dict[str, str]:
 
 def _default_root() -> Path:
     cwd = Path.cwd()
-    if any((cwd / d).is_dir() for d in ("canon", "input", "work")):
+    # `init` always creates input/; canon/ or work/ alone do not count, so a source checkout
+    # (which ships canon/) does not shadow the configured workspace
+    if (cwd / "input").is_dir():
         return cwd
     cfg = user_config().get("CORPUS_GRAPH_ROOT")
     return Path(cfg) if cfg else cwd
