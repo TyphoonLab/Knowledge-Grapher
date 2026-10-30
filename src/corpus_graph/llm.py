@@ -108,6 +108,14 @@ class Backend:
 # --------------------------------------------------------------------------- claude -p
 
 
+def billing_override() -> str | None:
+    """The environment variable that makes `claude -p` bill an API account rather than the subscription."""
+    for var in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_CODE_USE_BEDROCK", "CLAUDE_CODE_USE_VERTEX"):
+        if os.environ.get(var):
+            return var
+    return None
+
+
 class ClaudeCLIBackend(Backend):
     name = "claude-cli"
 

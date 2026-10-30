@@ -103,3 +103,13 @@ def test_ctrl_c_exits_cleanly(tmp_path, monkeypatch, capsys):
     monkeypatch.setattr(ingest, "run", interrupted)
     assert cli.main(["--root", str(tmp_path), "ingest"]) == 130
     assert "re-run the same command" in capsys.readouterr().err
+
+
+def test_billing_override(monkeypatch):
+    from corpus_graph.llm import billing_override
+
+    for var in ("ANTHROPIC_API_KEY", "ANTHROPIC_AUTH_TOKEN", "CLAUDE_CODE_USE_BEDROCK", "CLAUDE_CODE_USE_VERTEX"):
+        monkeypatch.delenv(var, raising=False)
+    assert billing_override() is None
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test")
+    assert billing_override() == "ANTHROPIC_API_KEY"

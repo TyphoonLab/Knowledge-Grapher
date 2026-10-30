@@ -15,7 +15,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .chunking import DEFAULT_CHUNK_TOKENS, Chunk, ParsedMarkdown, QuoteLocator, verify_quote
-from .llm import LLMError, list_price, make_backend, model_id
+from .llm import LLMError, billing_override, list_price, make_backend, model_id
 from .prompts import PROMPT_VERSION, extraction_schema, system_prompt, user_prompt
 from .schema import Schema
 from .util import (Workspace, append_jsonl, confirm, eprint, estimate_tokens, nfc, notify, read_json, read_jsonl,
@@ -124,6 +124,11 @@ def run(ws: Workspace, backend: str = "claude-cli", model: str = "sonnet", effor
         f"≈ ${est['cost_usd']:.2f} at {model_id(model)} list price"
         + (" (replayed: no tokens spent)" if backend == "replay" else "")
     )
+    if todo and backend == "claude-cli":
+        var = billing_override()
+        eprint(f"billing: {var} is set, so `claude -p` bills that account, not your claude.ai subscription "
+               f"(unset it to use the subscription)" if var else
+               "billing: your claude.ai subscription via `claude -p` (no API key in the environment)")
     if not todo or dry_run:
         return {"estimate": est, "processed": 0}
     if len(todo) > DOC_GATE and not yes:
@@ -184,7 +189,7 @@ def run(ws: Workspace, backend: str = "claude-cli", model: str = "sonnet", effor
             eprint(
                 f"  [{totals['done'] + totals['failed']}/{len(jobs_list)}] {p.source} {c.id}: "
                 f"{len(v['nodes'])} nodes, {len(v['edges'])} edges, {len(v['rejected'])} rejected | "
-                f"run: {totals['in']:,} in / {totals['out']:,} out tokens, ${totals['cost']:.3f}"
+                f"run: {totals['in']:,} in / {totals['out']:,} out tokens, ${totals['cost']:.3f} API-equivalent"
             )
     eprint(
         f"extract: {totals['done']} chunk(s) done, {totals['failed']} failed; "
