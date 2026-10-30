@@ -69,7 +69,7 @@ That is idempotent and does, as your user:
 - `--niri`: copies `corpus-graph.kdl` to `~/.config/niri/` and appends `include "corpus-graph.kdl"` to `config.kdl` (once, marked, with a backup), then runs `niri validate`;
 - `--noctalia`: registers the theme template with Noctalia (v5 `config.toml`, or legacy v4 `user-templates.toml`), appended once and marked;
 - `--service`: enables `corpus-graph-serve.service`, a systemd user unit that keeps the viewer on `http://127.0.0.1:8765/`;
-- `--sample`: builds the bundled sample in `~/corpus-graph-sample` (recorded responses, no tokens).
+- `--sample`: builds the bundled sample in `~/corpus-graph-sample` (recorded responses, no tokens). Browse it with `corpus-graph --root ~/corpus-graph-sample serve --port 8766`; port 8765 is taken by the service, which shows your main workspace.
 
 Drop any flag to do that part by hand; the snippets live in `/usr/share/corpus-graph/`.
 

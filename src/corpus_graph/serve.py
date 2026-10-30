@@ -10,6 +10,7 @@ and regenerates index.html whenever graph.json is newer, so a rebuild needs no s
 
 from __future__ import annotations
 
+import errno
 import html
 import json
 import re
@@ -138,7 +139,16 @@ def make_server(ws: Workspace, port: int = 8765) -> ThreadingHTTPServer:
 
 
 def serve(ws: Workspace, port: int = 8765, open_browser: bool = True) -> int:
-    httpd = make_server(ws, port)
+    try:
+        httpd = make_server(ws, port)
+    except OSError as e:
+        if e.errno != errno.EADDRINUSE:
+            raise
+        # usually the corpus-graph-serve user service, already serving the configured workspace
+        eprint(f"serve: port {port} is already in use (is corpus-graph-serve.service running? "
+               f"it serves the workspace in your config at http://127.0.0.1:{port}/).\n"
+               f"       To browse {ws.root} as well, pick another port: --port {port + 1}, or --port 0 for any free one")
+        return 1
     url = f"http://127.0.0.1:{httpd.server_address[1]}/"
     eprint(f"serve: {url}  (Ctrl-C to stop)")
     if open_browser:

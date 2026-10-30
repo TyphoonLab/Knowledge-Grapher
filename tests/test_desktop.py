@@ -74,3 +74,17 @@ def test_server_placeholder_then_viewer(tmp_path, monkeypatch, sample_ws):
         assert (ws.out / "index.html").stat().st_mtime > first
     finally:
         httpd.shutdown()
+
+
+def test_serve_reports_busy_port(tmp_path, monkeypatch, capsys):
+    monkeypatch.setenv("XDG_CONFIG_HOME", str(tmp_path / "cfg"))
+    ws = Workspace.from_args(root=str(tmp_path / "ws"))
+    ws.out.mkdir(parents=True)
+    busy = serve.make_server(ws, 0)
+    try:
+        port = busy.server_address[1]
+        assert serve.serve(ws, port, open_browser=False) == 1
+        err = capsys.readouterr().err
+        assert f"port {port} is already in use" in err and "--port 0" in err
+    finally:
+        busy.server_close()

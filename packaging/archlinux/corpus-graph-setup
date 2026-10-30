@@ -120,7 +120,8 @@ if [ $sample = 1 ]; then
     cp -n "$share"/sample/input/*.md "$s/input/"
     corpus-graph --root "$s" init >/dev/null
     corpus-graph --root "$s" run --backend replay --fixtures "$share/sample/fixtures" --chunk-tokens 700
-    echo "sample: built in $s; browse it with  corpus-graph --root $s serve"
+    echo "sample: built in $s; browse it with  corpus-graph --root $s serve --port 8766"
+    echo "  (8765 belongs to the corpus-graph-serve service, which shows your main workspace)"
 fi
 
 # --- claude CLI ---------------------------------------------------------------------
