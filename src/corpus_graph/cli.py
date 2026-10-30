@@ -30,6 +30,15 @@ def _llm_args(p, default_backend="claude-cli"):
 
 
 def main(argv: list[str] | None = None) -> int:
+    try:
+        return _main(argv)
+    except KeyboardInterrupt:
+        # every stage caches per document/chunk, so re-running the same command resumes
+        eprint("\ninterrupted; finished documents are kept, re-run the same command to continue")
+        return 130
+
+
+def _main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(prog="corpus-graph", description=DESCRIPTION, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--root", help="workspace root (default: current directory or $CORPUS_GRAPH_ROOT)")
     ap.add_argument("--input", help="source documents (default: <root>/input)")

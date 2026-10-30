@@ -92,3 +92,14 @@ def test_serve_reports_busy_port(tmp_path, monkeypatch, capsys):
         assert f"port {port} is already in use" in err and "--port 0" in err
     finally:
         busy.server_close()
+
+
+def test_ctrl_c_exits_cleanly(tmp_path, monkeypatch, capsys):
+    from corpus_graph import cli, ingest
+
+    def interrupted(*a, **k):
+        raise KeyboardInterrupt
+
+    monkeypatch.setattr(ingest, "run", interrupted)
+    assert cli.main(["--root", str(tmp_path), "ingest"]) == 130
+    assert "re-run the same command" in capsys.readouterr().err

@@ -11,6 +11,7 @@ Greek and Hebrew are kept as Unicode (NFC); nothing is transliterated.
 from __future__ import annotations
 
 import re
+import time
 import zipfile
 from collections import Counter
 from pathlib import Path
@@ -61,6 +62,9 @@ def run(ws: Workspace, force: bool = False, use_ocr: bool = False, quiet: bool =
             manifest[h] = {"source": rel, "md": md_path.name}
             stats["skipped"] += 1
             continue
+        if not quiet:  # PDF layout analysis can take minutes per book; say what is running
+            eprint(f"  … {rel}{_page_hint(src)}")
+        t0 = time.monotonic()
         try:
             body, footnotes, meta = convert(src, use_ocr=use_ocr)
         except Exception as exc:  # one bad file must not stop the run
@@ -80,7 +84,7 @@ def run(ws: Workspace, force: bool = False, use_ocr: bool = False, quiet: bool =
         if not quiet:
             q = meta.get("quality", {})
             flag = "  (poor text yield: see meta.quality)" if q.get("poor") else ""
-            eprint(f"  + {rel} -> md/{h[:12]}….md  [{meta['extractor']}]{flag}")
+            eprint(f"  + {rel} -> md/{h[:12]}….md  [{meta['extractor']}, {time.monotonic() - t0:.0f}s]{flag}")
     write_json(ws.work / "manifest.json", manifest)
     if not quiet:
         eprint(f"ingest: {stats['converted']} converted, {stats['skipped']} unchanged, {stats['failed']} failed")
@@ -284,6 +288,18 @@ def convert_docx(src: Path):
 
 
 # =========================================================================== PDF
+
+
+def _page_hint(src: Path) -> str:
+    if src.suffix.lower() != ".pdf":
+        return ""
+    try:
+        import pymupdf
+
+        with pymupdf.open(src) as doc:
+            return f" ({doc.page_count} pages)"
+    except Exception:
+        return ""
 
 
 def convert_pdf(src: Path, use_ocr: bool = False):
