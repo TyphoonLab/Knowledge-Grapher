@@ -399,7 +399,11 @@ function render() {
     if (!(n.unresolved || n.fx != null || n.id === state.selected)) continue;
     const r = radius(n);
     ctx.translate(n.x, n.y);
-    if (n.unresolved) { ctx.setLineDash([2 / k, 2 / k]); ctx.strokeStyle = colors.warn; ctx.lineWidth = 1.5 / k; ctx.stroke(shapePath2D(shapes[n.type], r + 1.5)); ctx.setLineDash([]); }
+    if (n.unresolved) {  // fades with its node while something is focused, so it never outshines the focus
+      ctx.globalAlpha = dim && !hi.has(n.id) ? 0.25 : 1;
+      ctx.setLineDash([2 / k, 2 / k]); ctx.strokeStyle = colors.warn; ctx.lineWidth = 1.5 / k; ctx.stroke(shapePath2D(shapes[n.type], r + 1.5)); ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+    }
     if (n.fx != null) { ctx.strokeStyle = colors.ink; ctx.lineWidth = 1.2 / k; ctx.stroke(shapePath2D("circle", r + 3)); }
     if (n.id === state.selected) { ctx.strokeStyle = colors.accent; ctx.lineWidth = 2.5 / k; ctx.stroke(shapePath2D("circle", r + 4)); }
     ctx.translate(-n.x, -n.y);
